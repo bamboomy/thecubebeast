@@ -307,6 +307,10 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                     if (shouldShowColor) {
                         colorImage.show();
                     }
+
+                } else {
+
+                    taps++;
                 }
 
             } else if (mode.equalsIgnoreCase(COLOR)) {
