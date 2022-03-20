@@ -24,7 +24,7 @@ public class GameActivity extends FragmentActivity implements MediaPlayer.OnErro
 
     private String md5Hex;
 
-    private MediaPlayer M_PLAYER_RAW, M_PLAYER_KEY1, M_PLAYER_KEY2;
+    private MediaPlayer M_PLAYER_RAW, M_PLAYER_LOOP;
 
     static GameActivity INSTANCE;
 
@@ -66,6 +66,8 @@ public class GameActivity extends FragmentActivity implements MediaPlayer.OnErro
         GameMaster.reset();
         Pictures.reset();
 
+        start();
+
         Log.d("beast", "game: start");
     }
 
@@ -73,32 +75,27 @@ public class GameActivity extends FragmentActivity implements MediaPlayer.OnErro
     protected void onResume() {
         super.onResume();
 
-        if (M_PLAYER_KEY1 != null) {
-            M_PLAYER_KEY1.release();
+        if (M_PLAYER_LOOP != null) {
+            M_PLAYER_LOOP.release();
         }
 
-        M_PLAYER_KEY1 = MediaPlayer.create(this, R.raw.piano1);
-        M_PLAYER_KEY1.setOnErrorListener(this);
-        M_PLAYER_KEY1.setLooping(false);
-        M_PLAYER_KEY1.setVolume(100, 100);
-
-        if (M_PLAYER_KEY2 != null) {
-            M_PLAYER_KEY2.release();
-        }
-
-        M_PLAYER_KEY2 = MediaPlayer.create(this, R.raw.piano2);
-        M_PLAYER_KEY2.setOnErrorListener(this);
-        M_PLAYER_KEY2.setLooping(false);
-        M_PLAYER_KEY2.setVolume(100, 100);
+        M_PLAYER_LOOP = MediaPlayer.create(this, R.raw.loop);
+        M_PLAYER_LOOP.setOnErrorListener(this);
+        M_PLAYER_LOOP.setLooping(true);
+        M_PLAYER_LOOP.setVolume(100, 100);
 
         play = true;
 
-        new Thread(new PianoMan()).start();
+        M_PLAYER_LOOP.start();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+
+        if (M_PLAYER_LOOP != null && M_PLAYER_LOOP.isPlaying()) {
+            M_PLAYER_LOOP.stop();
+        }
 
         play = false;
     }
@@ -118,17 +115,12 @@ public class GameActivity extends FragmentActivity implements MediaPlayer.OnErro
             M_PLAYER_RAW.release();
         }
 
-        if (M_PLAYER_KEY1 != null) {
-            M_PLAYER_KEY1.release();
-        }
-
-        if (M_PLAYER_KEY2 != null) {
-            M_PLAYER_KEY2.release();
+        if (M_PLAYER_LOOP != null) {
+            M_PLAYER_LOOP.release();
         }
 
         M_PLAYER_RAW = null;
-        M_PLAYER_KEY1 = null;
-        M_PLAYER_KEY2 = null;
+        M_PLAYER_LOOP = null;
 
         Log.d("beast", "game : destroy");
     }
@@ -161,21 +153,12 @@ public class GameActivity extends FragmentActivity implements MediaPlayer.OnErro
             }
         }
 
-        if (M_PLAYER_KEY1 != null) {
+        if (M_PLAYER_LOOP != null) {
             try {
-                M_PLAYER_KEY1.stop();
-                M_PLAYER_KEY1.release();
+                M_PLAYER_LOOP.stop();
+                M_PLAYER_LOOP.release();
             } finally {
-                M_PLAYER_KEY1 = null;
-            }
-        }
-
-        if (M_PLAYER_KEY2 != null) {
-            try {
-                M_PLAYER_KEY2.stop();
-                M_PLAYER_KEY2.release();
-            } finally {
-                M_PLAYER_KEY2 = null;
+                M_PLAYER_LOOP = null;
             }
         }
 
@@ -203,37 +186,5 @@ public class GameActivity extends FragmentActivity implements MediaPlayer.OnErro
         startActivity(intent);
 
         finish();
-    }
-
-
-    private class PianoMan implements Runnable {
-
-        @Override
-        public void run() {
-
-            while (play) {
-
-                long wait = (long) ((Math.random() * 3) + 1) * 1000;
-
-                try {
-                    Thread.sleep(wait);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                if ((Math.random() * 3) > 1) {
-
-                    if (M_PLAYER_KEY1 != null) {
-                        M_PLAYER_KEY1.start();
-                    }
-
-                } else {
-
-                    if (M_PLAYER_KEY2 != null) {
-                        M_PLAYER_KEY2.start();
-                    }
-                }
-            }
-        }
     }
 }

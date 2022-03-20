@@ -23,7 +23,7 @@ public class MotionListener extends GLSurfaceView implements View.OnTouchListene
 
     private boolean listen = true;
 
-    private int updateSpeed = 500;
+    private int updateSpeed = 77;
 
     private boolean running = true;
 
@@ -33,7 +33,7 @@ public class MotionListener extends GLSurfaceView implements View.OnTouchListene
         public void run() {
 
             try {
-                sleep(5000);
+                sleep(77);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
