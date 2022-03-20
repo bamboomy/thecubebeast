@@ -248,7 +248,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
         tutorialManager.updateGLTexture(sameSide, mode.equalsIgnoreCase(ALL));
 
         tutorialManager.updateColorGLTexture(mode.equalsIgnoreCase(COLOR),
-                mode.equalsIgnoreCase(COLOR_CUBE_CHOOSEN), mode.equalsIgnoreCase(ALL));
+                mode.equalsIgnoreCase(COLOR_CUBE_CHOOSEN), mode.equalsIgnoreCase(ONE));
 
         tutorialManager.draw(mTextureCoordinateHandle, maPositionHandle, muMVPMatrixHandle, tutorialMatrix, maColorHandle);
 

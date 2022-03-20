@@ -3,7 +3,6 @@ package com.bamboomy.thecubebeast.game;
 import static com.bamboomy.thecubebeast.MainActivity.TAG;
 import static java.lang.Thread.sleep;
 
-import android.content.Intent;
 import android.util.Log;
 
 public class GameMaster {
@@ -29,6 +28,8 @@ public class GameMaster {
     private boolean hideable = false;
 
     private BeastRenderer beastRenderer;
+
+    private Hider hider = null;
 
     private GameMaster() {
         // Exists only to defeat instantiation.
@@ -116,24 +117,9 @@ public class GameMaster {
 
                 hideable = true;
 
-                new Thread(new Runnable() {
+                hider = new Hider();
 
-                    @Override
-                    public void run() {
-
-                        locked = true;
-
-                        try {
-                            sleep(2000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        Log.d(TAG, "running...");
-
-                        hide();
-                    }
-                }).start();
+                new Thread(hider).start();
             }
         }
 
@@ -142,7 +128,7 @@ public class GameMaster {
         return true;
     }
 
-    private void hide() {
+    private synchronized void hide() {
 
         if (hideable) {
 
@@ -158,6 +144,12 @@ public class GameMaster {
             locked = hideable = false;
 
             beastRenderer.addMiss();
+
+            if(hider != null){
+
+                hider.cancelled = true;
+                hider = null;
+            }
         }
     }
 
@@ -243,5 +235,30 @@ public class GameMaster {
     void setRenderer(BeastRenderer beastRenderer) {
 
         this.beastRenderer = beastRenderer;
+    }
+
+    private class Hider implements Runnable {
+
+        boolean cancelled = false;
+
+        @Override
+        public void run() {
+
+            locked = true;
+
+            try {
+                sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            Log.d(TAG, "running...");
+
+            if (cancelled) {
+                return;
+            }
+
+            hide();
+        }
     }
 }

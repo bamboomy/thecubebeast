@@ -53,6 +53,9 @@ public class TutorialManager {
 
     private boolean cubeChoosen = false;
 
+    private int colorTaps = 0;
+    private boolean tutorialFinished = false;
+
     TutorialManager(Context mContext) {
 
         this.mContext = mContext;
@@ -264,7 +267,7 @@ public class TutorialManager {
 
         Log.d("beast", "t: " + tapped + " st: " + shouldTap);
 
-        if (!shouldTap && !(ACTIVE || COLOR)){
+        if (!shouldTap && !(ACTIVE || COLOR)) {
             return;
         }
 
@@ -275,7 +278,7 @@ public class TutorialManager {
         dirty = true;
     }
 
-    void updateColorGLTexture(boolean colorMode, boolean oneChoosen, boolean all) {
+    void updateColorGLTexture(boolean colorMode, boolean oneChosen, boolean one) {
 
         if (!COLOR) {
             return;
@@ -290,18 +293,12 @@ public class TutorialManager {
             return;
         }
 
-        if (all && cubeChoosen) {
+        if (one && cubeChoosen) {
 
-            loadGLTexture(R.drawable.aid_color_easier);
+            if (++colorTaps > 2) {
 
-            SharedPreferences sharedPrefs = PreferenceManager
-                    .getDefaultSharedPreferences(mContext);
-
-            SharedPreferences.Editor editor = sharedPrefs.edit();
-
-            editor.putBoolean(COLOR_TUTORIAL_FINISHED, true);
-
-            editor.commit();
+                finishTutorial();
+            }
 
             new Thread(new Runnable() {
 
@@ -314,21 +311,21 @@ public class TutorialManager {
                         e.printStackTrace();
                     }
 
-                    COLOR = false;
+                    finishTutorial();
                 }
             }).start();
 
             return;
         }
 
-        if (oneChoosen && tapped) {
+        if (oneChosen && tapped) {
 
             loadGLTexture(R.drawable.aid_color_tap_away);
 
             return;
         }
 
-        if (oneChoosen) {
+        if (oneChosen) {
 
             loadGLTexture(R.drawable.aid_color_random_color);
 
@@ -341,5 +338,27 @@ public class TutorialManager {
         }
 
         loadGLTexture(R.drawable.aid_color);
+    }
+
+    private void finishTutorial() {
+
+        if (tutorialFinished) {
+            return;
+        }
+
+        loadGLTexture(R.drawable.aid_color_easier);
+
+        SharedPreferences sharedPrefs = PreferenceManager
+                .getDefaultSharedPreferences(mContext);
+
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+
+        editor.putBoolean(COLOR_TUTORIAL_FINISHED, true);
+
+        editor.commit();
+
+        COLOR = false;
+
+        tutorialFinished = true;
     }
 }
