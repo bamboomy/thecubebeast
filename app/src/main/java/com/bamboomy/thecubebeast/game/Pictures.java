@@ -1,5 +1,6 @@
 package com.bamboomy.thecubebeast.game;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -37,7 +38,7 @@ public class Pictures {
 
     // Load a bitmap from a resource with a target size
     public static Bitmap decodeSampledBitmapFromResource(
-            int resId, int reqWidth, int reqHeight, GameActivity mContext) {
+            int resId, int reqWidth, int reqHeight, Context mContext) {
 
         Resources res = mContext.getResources();
 

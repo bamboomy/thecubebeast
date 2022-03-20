@@ -3,15 +3,23 @@ package com.bamboomy.thecubebeast.game;
 import static com.bamboomy.thecubebeast.game.TutorialManager.COLOR_TUTORIAL_FINISHED;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.opengl.GLUtils;
 import android.opengl.Matrix;
 import android.preference.PreferenceManager;
 
 import com.bamboomy.thecubebeast.R;
+import com.bamboomy.thecubebeast.util.TimeToString;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+
+import ri.blog.opengl008.TextManager;
+import ri.blog.opengl008.TextObject;
+import ri.blog.opengl008.riGraphicTools;
 
 public class BeastRenderer implements GLSurfaceView.Renderer {
 
@@ -115,12 +123,13 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
     private float mTextProjectionMatrix[] = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
             1.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
 
-    private int taps;
+    private int taps = 0;
 
-    private long begin;
-    private long rawTime;
+    private long begin = System.currentTimeMillis();
+    ;
     private String timeText = "00:00.00";
-    private boolean timerStarted = false;
+
+    private MotionListener motionListener;
 
 
     BeastRenderer(Pictures pictures, MotionListener motionListener, GameActivity gameActivity) {
@@ -132,12 +141,16 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
         this.activity = gameActivity;
 
         tutorialManager = new TutorialManager(activity);
+
+        this.motionListener = motionListener;
+
+        textSetupManagers(true, true);
     }
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 
-        mProgram = createProgram(mVertexShader, mFragmentShader);
+        mProgram = createProgram(mVertexShader, mFragmentShader, true);
 
         if (mProgram == 0) {
             return;
@@ -158,6 +171,48 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
         Matrix.multiplyMM(mMVPMatrix, 0, mVMatrix, 0, mCoordSystemData, 0);
         Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mMVPMatrix, 0);
+
+        mTextProgram = createProgram(mTextVertexShader, mTextFragmentShader, false);
+        // This is ugly, but the TextManager does not allow to pass the
+        // programID to be used for rendering.
+        riGraphicTools.sp_Text = mTextProgram;
+
+        int[] textures = new int[2];
+
+        GLES20.glDeleteTextures(2, textures, 0);
+
+        GLES20.glGenTextures(2, textures, 0);
+
+        mTextureID = textures[0];
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureID);
+
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D,
+                GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D,
+                GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S,
+                GLES20.GL_REPEAT);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T,
+                GLES20.GL_REPEAT);
+
+        textSetupFontTexture(textures[1]);
+    }
+
+    private void textSetupFontTexture(int hTexture) {
+        int id = activity.getResources().getIdentifier("drawable/font", null,
+                activity.getPackageName());
+        // Log.i(TAG, "Load font bitmap. Id: " + id);
+        Bitmap bmp = BitmapFactory.decodeResource(activity.getResources(), id);
+
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE0 + 1);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, hTexture);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D,
+                GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D,
+                GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0);
+        bmp.recycle();
     }
 
     @Override
@@ -194,6 +249,10 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
         tutorialManager.draw(mTextureCoordinateHandle, maPositionHandle, muMVPMatrixHandle, tutorialMatrix, maColorHandle);
 
         colorImage.draw(mTextureCoordinateHandle, maPositionHandle, muMVPMatrixHandle, tutorialMatrix, maColorHandle);
+
+        updateTimeText();
+
+        renderText();
     }
 
     private void setGLParameters() {
@@ -284,7 +343,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                 SharedPreferences sharedPrefs = PreferenceManager
                         .getDefaultSharedPreferences(activity);
 
-                if(!sharedPrefs.getBoolean(COLOR_TUTORIAL_FINISHED, false)){
+                if (!sharedPrefs.getBoolean(COLOR_TUTORIAL_FINISHED, false)) {
 
                     TutorialManager.COLOR = true;
                 }
@@ -345,7 +404,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
         }
     }
 
-    private int createProgram(String vertexSource, String fragmentSource) {
+    private int createProgram(String vertexSource, String fragmentSource, boolean beast) {
 
         int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexSource);
         if (vertexShader == 0) {
@@ -370,25 +429,28 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
             }
         }
 
-        maColorHandle = GLES20.glGetAttribLocation(program, "a_Color");
-        if (maColorHandle == -1) {
-            throw new RuntimeException("Could not get attrib location for a_Color");
-        }
+        if (beast) {
 
-        maPositionHandle = GLES20.glGetAttribLocation(program, "aPosition");
-        if (maPositionHandle == -1) {
-            throw new RuntimeException("Could not get attrib location for aPosition");
-        }
+            maColorHandle = GLES20.glGetAttribLocation(program, "a_Color");
+            if (maColorHandle == -1) {
+                throw new RuntimeException("Could not get attrib location for a_Color");
+            }
 
-        mTextureCoordinateHandle = GLES20.glGetAttribLocation(program,
-                "aTextureCoord");
-        if (mTextureCoordinateHandle == -1) {
-            throw new RuntimeException("Could not get attrib location for aTextureCoord");
-        }
+            maPositionHandle = GLES20.glGetAttribLocation(program, "aPosition");
+            if (maPositionHandle == -1) {
+                throw new RuntimeException("Could not get attrib location for aPosition");
+            }
 
-        muMVPMatrixHandle = GLES20.glGetUniformLocation(program, "uMVPMatrix");
-        if (muMVPMatrixHandle == -1) {
-            throw new RuntimeException("Could not get attrib location for uMVPMatrix");
+            mTextureCoordinateHandle = GLES20.glGetAttribLocation(program,
+                    "aTextureCoord");
+            if (mTextureCoordinateHandle == -1) {
+                throw new RuntimeException("Could not get attrib location for aTextureCoord");
+            }
+
+            muMVPMatrixHandle = GLES20.glGetUniformLocation(program, "uMVPMatrix");
+            if (muMVPMatrixHandle == -1) {
+                throw new RuntimeException("Could not get attrib location for uMVPMatrix");
+            }
         }
 
         return program;
@@ -483,14 +545,8 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
     private void updateTimeText() {
         long now = System.currentTimeMillis();
-
-        long difference = now - begin;
-
-        rawTime = difference;
-
-        timeText = TimeToString.convert(difference);
-
-        gLSurfaceView.requestRender();
+        timeText = TimeToString.convert(now - begin);
+        //motionListener.requestRender();
     }
 
     private void textSetupManagers(boolean tapsEnabled, boolean time) {
