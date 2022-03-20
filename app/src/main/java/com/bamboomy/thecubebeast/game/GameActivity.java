@@ -63,7 +63,7 @@ public class GameActivity extends FragmentActivity implements MediaPlayer.OnErro
 
         INSTANCE = this;
 
-        GameMaster.reset();
+        GameMaster.dirtyReset();
         Pictures.reset();
 
         start();

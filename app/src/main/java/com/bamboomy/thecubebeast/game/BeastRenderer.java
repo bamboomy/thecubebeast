@@ -102,6 +102,8 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
     private TextObject mTextTaps;
     private TextObject mTextTimeTitle;
     private TextObject mTextTime;
+    private TextObject mTextMissesTitle;
+    private TextObject mTextMisses;
 
     private int mTextProgram;
 
@@ -123,10 +125,10 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
     private float mTextProjectionMatrix[] = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
             1.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
 
-    private int taps = 0;
+    private int taps = 0, misses = 0;
 
     private long begin = System.currentTimeMillis();
-    ;
+
     private String timeText = "00:00.00";
 
     private MotionListener motionListener;
@@ -144,7 +146,9 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
         this.motionListener = motionListener;
 
-        textSetupManagers(true, true);
+        textSetupManagers(true, true, true);
+
+        GameMaster.getInstance().setRenderer(this);
     }
 
     @Override
@@ -537,8 +541,13 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
         }
 
         if (mTextTimeTitle != null) {
-            mTextTimeTitle.text = "time";
+            mTextTimeTitle.text = "Time:";
             mTextTime.text = timeText;
+        }
+
+        if (mTextMissesTitle  != null) {
+            mTextMissesTitle.text = "Misses:";
+            mTextMisses.text = misses + "";
         }
 
         if (mTextManagerStatus != null) {
@@ -553,9 +562,9 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
         //motionListener.requestRender();
     }
 
-    private void textSetupManagers(boolean tapsEnabled, boolean time) {
+    private void textSetupManagers(boolean tapsEnabled, boolean time, boolean misses) {
 
-        if (tapsEnabled || time) {
+        if (tapsEnabled || time || misses) {
             // Text in front of the screen
             mTextManagerStatus = new TextManager();
             mTextManagerStatus.setTextureID(1);
@@ -574,6 +583,19 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                 mTextManagerStatus.addText(mTextTaps);
             }
 
+            if (misses) {
+
+                mTextMissesTitle = new TextObject("", -0.95f, 0.4f);
+                mTextMissesTitle.color = new float[]{0.23f, 0.63f, 0.19f, 1.0f}; // Green-ish
+
+                mTextManagerStatus.addText(mTextMissesTitle);
+
+                mTextMisses = new TextObject("", -0.95f, 0.2f);
+                mTextMisses.color = new float[]{0.23f, 0.63f, 0.19f, 1.0f}; // Green-ish
+
+                mTextManagerStatus.addText(mTextMisses);
+            }
+
             if (time) {
 
                 mTextTimeTitle = new TextObject("", -0.95f, -0.8f);
@@ -587,5 +609,10 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                 mTextManagerStatus.addText(mTextTime);
             }
         }
+    }
+
+    public void addMiss() {
+
+        misses++;
     }
 }

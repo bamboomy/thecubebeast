@@ -28,6 +28,8 @@ public class GameMaster {
 
     private boolean hideable = false;
 
+    private BeastRenderer beastRenderer;
+
     private GameMaster() {
         // Exists only to defeat instantiation.
 
@@ -154,6 +156,8 @@ public class GameMaster {
             numberShown = 0;
 
             locked = hideable = false;
+
+            beastRenderer.addMiss();
         }
     }
 
@@ -217,6 +221,15 @@ public class GameMaster {
         instance = new GameMaster();
     }
 
+    static void dirtyReset() {
+
+        BeastRenderer temp = instance.beastRenderer;
+
+        instance = new GameMaster();
+
+        instance.beastRenderer = temp;
+    }
+
     void oneSolved() {
 
         isOneTupleSolved = true;
@@ -225,5 +238,10 @@ public class GameMaster {
     boolean showColor() {
 
         return taps >= 10 && !isOneTupleSolved;
+    }
+
+    void setRenderer(BeastRenderer beastRenderer) {
+
+        this.beastRenderer = beastRenderer;
     }
 }
