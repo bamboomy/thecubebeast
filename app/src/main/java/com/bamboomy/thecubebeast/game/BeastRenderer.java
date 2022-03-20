@@ -69,7 +69,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
     private static final String ALL = "all";
     private static final String ONE = "one";
     private static final String COLOR = "COLOR";
-    private static final String COLOR_COBE_CHOOSEN = "COLOR_COBE_CHOOSEN";
+    private static final String COLOR_CUBE_CHOOSEN = "COLOR_COBE_CHOOSEN";
 
     private String mode = ALL;
 
@@ -248,7 +248,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
         tutorialManager.updateGLTexture(sameSide, mode.equalsIgnoreCase(ALL));
 
         tutorialManager.updateColorGLTexture(mode.equalsIgnoreCase(COLOR),
-                mode.equalsIgnoreCase(COLOR_COBE_CHOOSEN), mode.equalsIgnoreCase(ALL));
+                mode.equalsIgnoreCase(COLOR_CUBE_CHOOSEN), mode.equalsIgnoreCase(ALL));
 
         tutorialManager.draw(mTextureCoordinateHandle, maPositionHandle, muMVPMatrixHandle, tutorialMatrix, maColorHandle);
 
@@ -284,12 +284,6 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
             if (mode.equalsIgnoreCase(ALL)) {
 
-                if (colorImage.checkTriangleHit(0, new float[1],
-                        mHeight, mWidth, x, y, mMVPMatrix)) {
-
-                    mode = COLOR;
-                }
-
                 if (beast.selectCube(x, y, mWidth, mHeight, true)) {
 
                     mode = ONE;
@@ -299,22 +293,31 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
             } else if (mode.equalsIgnoreCase(ONE)) {
 
-                boolean[] flags = beast.checkHit(x, y, mWidth, mHeight, true);
+                if (colorImage.checkTriangleHit(0, new float[1],
+                        mHeight, mWidth, x, y, mMVPMatrix)) {
 
-                boolean cubeHit = flags[0];
-                sameSide = flags[1];
-
-                if (!cubeHit) {
-
-                    mode = ALL;
-
-                    if (shouldShowColor) {
-                        colorImage.show();
-                    }
+                    mode = COLOR;
 
                 } else {
 
-                    taps++;
+                    boolean[] flags = beast.checkHit(x, y, mWidth, mHeight, true);
+
+                    boolean cubeHit = flags[0];
+                    sameSide = flags[1];
+
+                    if (!cubeHit) {
+
+                        mode = ALL;
+
+                        // TODO: come back to this
+                        if (shouldShowColor) {
+                            colorImage.show();
+                        }
+
+                    } else {
+
+                        taps++;
+                    }
                 }
 
             } else if (mode.equalsIgnoreCase(COLOR)) {
@@ -323,10 +326,10 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
                     beast.switchColorCurrentCube();
 
-                    mode = COLOR_COBE_CHOOSEN;
+                    mode = COLOR_CUBE_CHOOSEN;
                 }
 
-            } else if (mode.equalsIgnoreCase(COLOR_COBE_CHOOSEN)) {
+            } else if (mode.equalsIgnoreCase(COLOR_CUBE_CHOOSEN)) {
 
                 boolean[] flags = beast.checkHit(x, y, mWidth, mHeight, false);
 
