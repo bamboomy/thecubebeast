@@ -67,10 +67,10 @@ public class ColorImage {
     private static final float[] vertices = {
             // X, Y, Z, W
             -2.5f, 0.75f, -1.2f, 1.0f,
-            -1.0f, 0.75f, -1.2f, 1.0f,
-            -1.0f, 1.25f, -1.2f, 1.0f,
+            -2.0f, 0.75f, -1.2f, 1.0f,
+            -2.0f, 1.25f, -1.2f, 1.0f,
             -2.5f, 0.75f, -1.2f, 1.0f,
-            -1.0f, 1.25f, -1.2f, 1.0f,
+            -2.0f, 1.25f, -1.2f, 1.0f,
             -2.5f, 1.25f, -1.2f, 1.0f,};
 
     private static final int TEXTURE_COORD_DATA_SIZE = 2;

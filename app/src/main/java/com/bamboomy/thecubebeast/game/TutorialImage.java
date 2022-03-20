@@ -65,12 +65,12 @@ public class TutorialImage {
 
     private static final float[] vertices = {
             // X, Y, Z, W
-            -2.5f, 0.0f, -1.0f, 1.0f,
-            -1.0f, 0.0f, -1.0f, 1.0f,
-            -1.0f, 0.75f, -1.0f, 1.0f,
-            -2.5f, 0.0f, -1.0f, 1.0f,
-            -1.0f, 0.75f, -1.0f, 1.0f,
-            -2.5f, 0.75f, -1.0f, 1.0f, };
+            -2.75f, 0.0f, -1.0f, 1.0f,
+            -1.5f, 0.0f, -1.0f, 1.0f,
+            -1.5f, 0.75f, -1.0f, 1.0f,
+            -2.75f, 0.0f, -1.0f, 1.0f,
+            -1.5f, 0.75f, -1.0f, 1.0f,
+            -2.75f, 0.75f, -1.0f, 1.0f, };
 
     private static final int TEXTURE_COORD_DATA_SIZE = 2;
     private static final int FLOAT_SIZE_BYTES = 4;
