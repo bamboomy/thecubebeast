@@ -88,6 +88,8 @@ public class Beast {
 
     private float[] mMVPMatrix;
 
+    private int[] sides = new int[2];
+
     Beast(Pictures pictures, MotionListener motionListener, GameActivity gameActivity) {
 
         for (int i = 0; i < cubes.length / 2; i++) {
@@ -102,6 +104,9 @@ public class Beast {
         Matrix.translateM(depthMatrix, 0, 0, 0, 1);
 
         initCubes();
+
+        sides[0] = -1;
+        sides[1] = -1;
     }
 
     private void initCubes() {
@@ -239,6 +244,8 @@ public class Beast {
                         found = cube;
 
                         side = f;
+
+                        pushAndHide(side);
                     }
                 }
             }
@@ -266,6 +273,29 @@ public class Beast {
         }
 
         return flags;
+    }
+
+    private void pushAndHide(int side) {
+
+        if (sides[0] == -1) {
+
+            sides[0] = side;
+
+        } else {
+
+            if (sides[1] != -1) {
+
+                hideSides();
+
+            } else if (sides[0] != side) {
+
+                sides[1] = side;
+            }
+        }
+
+    }
+
+    private void hideSides() {
     }
 
     public boolean selectCube(int x, int y, int mWidth, int mHeight, boolean shouldAct) {
