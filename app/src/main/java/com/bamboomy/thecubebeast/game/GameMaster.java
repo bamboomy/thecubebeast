@@ -26,6 +26,8 @@ public class GameMaster {
 
     private boolean isOneTupleSolved = false;
 
+    private boolean hideable = false;
+
     private GameMaster() {
         // Exists only to defeat instantiation.
 
@@ -70,7 +72,7 @@ public class GameMaster {
 
             Log.d(TAG, "going to return false: " + numberShown);
 
-            return false;
+            hide();
         }
 
         if (locked) {
@@ -110,6 +112,8 @@ public class GameMaster {
 
             } else {
 
+                hideable = true;
+
                 new Thread(new Runnable() {
 
                     @Override
@@ -125,16 +129,7 @@ public class GameMaster {
 
                         Log.d(TAG, "running...");
 
-                        for (Side revert : sides) {
-
-                            if (revert != null) {
-                                revert.reset();
-                            }
-                        }
-
-                        numberShown = 0;
-
-                        locked = false;
+                        hide();
                     }
                 }).start();
             }
@@ -143,6 +138,23 @@ public class GameMaster {
         Log.d(TAG, "going to return true: " + numberShown);
 
         return true;
+    }
+
+    private void hide() {
+
+        if (hideable) {
+
+            for (Side revert : sides) {
+
+                if (revert != null) {
+                    revert.reset();
+                }
+            }
+
+            numberShown = 0;
+
+            locked = hideable = false;
+        }
     }
 
     private void updateMetrics() {
