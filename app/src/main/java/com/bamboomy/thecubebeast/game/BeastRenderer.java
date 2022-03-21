@@ -273,10 +273,6 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
     private void processInterface() {
 
-        if (shouldShowColor) {
-            colorImage.show();
-        }
-
         if (mRotate == 1) {
             updateRotMatrix();
             mRotate = 0;

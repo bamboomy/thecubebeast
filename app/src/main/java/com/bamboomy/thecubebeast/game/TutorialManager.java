@@ -289,6 +289,14 @@ public class TutorialManager {
         if (!COLOR_TUTORIAL) {
             return;
         }
+
+        if (mode == Mode.COLOR) {
+
+            loadGLTexture(R.drawable.aid_color_select_cube);
+
+            return;
+        }
+
         /*
 
         if (colorMode && !cubeChoosen) {
