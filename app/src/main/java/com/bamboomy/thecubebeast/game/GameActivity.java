@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.Window;
@@ -14,7 +15,7 @@ import android.widget.Toast;
 import com.bamboomy.thecubebeast.MainActivity;
 import com.bamboomy.thecubebeast.R;
 
-public class GameActivity extends FragmentActivity implements MediaPlayer.OnErrorListener {
+public class GameActivity extends AppCompatActivity implements MediaPlayer.OnErrorListener {
 
     private MotionListener motionListener;
 

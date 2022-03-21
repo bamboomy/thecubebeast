@@ -63,14 +63,16 @@ public class TutorialImage {
 
     private FloatBuffer vertexBuffer, colorBuffer; // buffer holding the vertices
 
+    private static float x1 = -2f, x2 = -0.75f, y1= -0.5f, y2 = 0.5f, z = -2f;
+
     private static final float[] vertices = {
             // X, Y, Z, W
-            -2.75f, 0.0f, -1.0f, 1.0f,
-            -1.5f, 0.0f, -1.0f, 1.0f,
-            -1.5f, 0.75f, -1.0f, 1.0f,
-            -2.75f, 0.0f, -1.0f, 1.0f,
-            -1.5f, 0.75f, -1.0f, 1.0f,
-            -2.75f, 0.75f, -1.0f, 1.0f, };
+            x1, y1, z, 1.0f,
+            x2, y1, z, 1.0f,
+            x2, y2, z, 1.0f,
+            x1, y1, z, 1.0f,
+            x2, y2, z, 1.0f,
+            x1, y2, z, 1.0f, };
 
     private static final int TEXTURE_COORD_DATA_SIZE = 2;
     private static final int FLOAT_SIZE_BYTES = 4;
