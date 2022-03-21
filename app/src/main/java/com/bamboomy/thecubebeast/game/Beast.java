@@ -212,11 +212,9 @@ public class Beast {
         }
     }
 
-    public boolean[] checkHit(int x, int y, int mWidth, int mHeight, boolean shouldAct) {
+    public HitInformation checkHit(int x, int y, int mWidth, int mHeight, boolean shouldAct) {
 
-        boolean[] flags = new boolean[2];
-
-        flags[0] = flags[1] = false;
+        HitInformation hitInformation = new HitInformation();
 
         Cube found = null;
 
@@ -239,6 +237,10 @@ public class Beast {
                         found = cube;
 
                         side = f;
+
+                        hitInformation = new HitInformation(true, found, found.getSide(side));
+
+                        break;
                     }
                 }
             }
@@ -248,10 +250,7 @@ public class Beast {
 
             if (found != null && found.equals(current)) {
 
-                flags[0] = true;
-                flags[1] = found.tap(side);
-
-                return flags;
+                found.tap(side);
 
             } else if (current != null) {
 
@@ -262,15 +261,17 @@ public class Beast {
 
         } else {
 
-            flags[0] = found != null && found.equals(current);
+            hitInformation.setFound(found != null && found.equals(current));
         }
 
-        return flags;
+        return hitInformation;
     }
 
-    public boolean selectCube(int x, int y, int mWidth, int mHeight, boolean shouldAct) {
+    public HitInformation selectCube(int x, int y, int mWidth, int mHeight, boolean shouldAct) {
 
         Cube found = null;
+
+        HitInformation result = new HitInformation();
 
         float[] depth = new float[1];
         float curDepth = 0;
@@ -289,6 +290,10 @@ public class Beast {
                         curDepth = depth[0];
 
                         found = cube;
+
+                        result = new HitInformation(true, found, found.getSide(curFace));
+
+                        break;
                     }
                 }
             }
@@ -300,16 +305,12 @@ public class Beast {
 
             current = found;
 
-            return true;
-
         } else if (found != null) {
 
             current = found;
-
-            return true;
         }
 
-        return false;
+        return result;
     }
 
     void rotateCurrentCube(float mYAngle, float mXAngle) {
@@ -336,5 +337,10 @@ public class Beast {
     public void switchColorCurrentCube() {
 
         current.switchColor();
+    }
+
+    public void switchColor(Cube cube) {
+
+        cube.switchColor();
     }
 }

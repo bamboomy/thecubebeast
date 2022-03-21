@@ -35,9 +35,9 @@ public class TutorialManager {
 
     private boolean dirty = true;
 
-    private boolean rotated = false, tapped = false;
+    private boolean rotated = false;
 
-    private boolean shouldRotate = true, shouldTap = false;
+    private boolean shouldRotate = true;
 
     private boolean showRotateBeast = true, showTapCube = false;
     private boolean showRotateCube = false, showRevealSide = false;
@@ -46,7 +46,7 @@ public class TutorialManager {
     private boolean showOtherCube = false, showEnd = false;
 
     public static boolean ACTIVE = false;
-    public static boolean COLOR = false;
+    public static boolean COLOR_TUTORIAL = false;
 
     public static final String TUTORIAL_FINISHED = "tutorialFinished";
     public static final String COLOR_TUTORIAL_FINISHED = "colorTutorialFinished";
@@ -60,12 +60,12 @@ public class TutorialManager {
 
         this.mContext = mContext;
 
-        COLOR = false;
+        COLOR_TUTORIAL = false;
     }
 
     void draw(int mTextureCoordinateHandle, int maPositionHandle, int muMVPMatrixHandle, float[] mMVPMatrix, int maColorHandle) {
 
-        if (!ACTIVE && !COLOR) {
+        if (!ACTIVE && !COLOR_TUTORIAL) {
             return;
         }
 
@@ -88,7 +88,7 @@ public class TutorialManager {
         if (showRotateBeast && rotated) {
 
             rotated = false;
-            shouldTap = true;
+            //shouldTap = true;
 
             loadGLTexture(R.drawable.select_cube);
 
@@ -98,6 +98,7 @@ public class TutorialManager {
             return;
         }
 
+        /*
         if (showTapCube && tapped) {
 
             tapped = false;
@@ -235,6 +236,8 @@ public class TutorialManager {
         if (showRotateBeast) {
             loadGLTexture(R.drawable.rotate_beast);
         }
+
+         */
     }
 
     synchronized void rotated() {
@@ -263,11 +266,12 @@ public class TutorialManager {
         }).start();
     }
 
+    /*
     synchronized void tapped() {
 
         Log.d("beast", "t: " + tapped + " st: " + shouldTap);
 
-        if (!shouldTap && !(ACTIVE || COLOR)) {
+        if (!shouldTap && !(ACTIVE || COLOR_TUTORIAL)) {
             return;
         }
 
@@ -278,11 +282,14 @@ public class TutorialManager {
         dirty = true;
     }
 
-    void updateColorGLTexture(boolean colorMode, boolean oneChosen, boolean one) {
+     */
 
-        if (!COLOR) {
+    void updateColorGLTexture(Mode mode) {
+
+        if (!COLOR_TUTORIAL) {
             return;
         }
+        /*
 
         if (colorMode && !cubeChoosen) {
 
@@ -337,6 +344,8 @@ public class TutorialManager {
             return;
         }
 
+         */
+
         loadGLTexture(R.drawable.aid_color);
     }
 
@@ -357,7 +366,7 @@ public class TutorialManager {
 
         editor.commit();
 
-        COLOR = false;
+        COLOR_TUTORIAL = false;
 
         tutorialFinished = true;
     }

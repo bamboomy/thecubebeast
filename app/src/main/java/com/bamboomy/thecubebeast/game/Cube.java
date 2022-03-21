@@ -475,4 +475,8 @@ class Cube {
                 * FLOAT_SIZE_BYTES).order(ByteOrder.nativeOrder()).asFloatBuffer();
         colorBuf.put(oneCubeFullOfColor).position(0);
     }
+
+    Side getSide(int index){
+        return sides[index];
+    }
 }

@@ -1,5 +1,9 @@
 package com.bamboomy.thecubebeast.game;
 
+import static com.bamboomy.thecubebeast.game.Mode.ALL;
+import static com.bamboomy.thecubebeast.game.Mode.COLOR;
+import static com.bamboomy.thecubebeast.game.Mode.COLOR_CUBE_CHOSEN;
+import static com.bamboomy.thecubebeast.game.Mode.ONE;
 import static com.bamboomy.thecubebeast.game.TutorialManager.COLOR_TUTORIAL_FINISHED;
 
 import android.content.SharedPreferences;
@@ -66,12 +70,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
     private int x, y;
 
-    private static final String ALL = "all";
-    private static final String ONE = "one";
-    private static final String COLOR = "COLOR";
-    private static final String COLOR_CUBE_CHOOSEN = "COLOR_COBE_CHOOSEN";
-
-    private String mode = ALL;
+    private Mode mode = ALL;
 
     private GameActivity activity;
 
@@ -245,10 +244,9 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
             activity.raw();
         }
 
-        tutorialManager.updateGLTexture(sameSide, mode.equalsIgnoreCase(ALL));
+        tutorialManager.updateGLTexture(sameSide, mode.equals(ALL));
 
-        tutorialManager.updateColorGLTexture(mode.equalsIgnoreCase(COLOR),
-                mode.equalsIgnoreCase(COLOR_CUBE_CHOOSEN), mode.equalsIgnoreCase(ONE));
+        tutorialManager.updateColorGLTexture(mode);
 
         tutorialManager.draw(mTextureCoordinateHandle, maPositionHandle, muMVPMatrixHandle, tutorialMatrix, maColorHandle);
 
@@ -275,6 +273,10 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
     private void processInterface() {
 
+        if (shouldShowColor) {
+            colorImage.show();
+        }
+
         if (mRotate == 1) {
             updateRotMatrix();
             mRotate = 0;
@@ -282,16 +284,17 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
         if (mCollision == 1) {
 
-            if (mode.equalsIgnoreCase(ALL)) {
+            if (mode.equals(ALL)) {
 
-                if (beast.selectCube(x, y, mWidth, mHeight, true)) {
+                if (beast.selectCube(x, y, mWidth, mHeight, true).isFound()) {
 
                     mode = ONE;
 
+                    // TODO: revise
                     colorImage.hide();
                 }
 
-            } else if (mode.equalsIgnoreCase(ONE)) {
+            } else if (mode.equals(ONE)) {
 
                 if (colorImage.checkTriangleHit(0, new float[1],
                         mHeight, mWidth, x, y, mMVPMatrix)) {
@@ -300,19 +303,16 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
                 } else {
 
-                    boolean[] flags = beast.checkHit(x, y, mWidth, mHeight, true);
+                    HitInformation hitInformation = beast.checkHit(x, y, mWidth, mHeight, true);
 
-                    boolean cubeHit = flags[0];
-                    sameSide = flags[1];
+                    boolean cubeHit = hitInformation.isFound();
+
+                    // TODO: revise if restating tutorial
+                    //sameSide = flags[1];
 
                     if (!cubeHit) {
 
                         mode = ALL;
-
-                        // TODO: come back to this
-                        if (shouldShowColor) {
-                            colorImage.show();
-                        }
 
                     } else {
 
@@ -320,22 +320,24 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                     }
                 }
 
-            } else if (mode.equalsIgnoreCase(COLOR)) {
+            } else if (mode.equals(COLOR)) {
 
-                if (beast.selectCube(x, y, mWidth, mHeight, false)) {
+                HitInformation hitInformation = beast.selectCube(x, y, mWidth, mHeight, false);
 
-                    beast.switchColorCurrentCube();
+                if (hitInformation.isFound()) {
 
-                    mode = COLOR_CUBE_CHOOSEN;
+                    beast.switchColor(hitInformation.getCube());
+
+                    mode = COLOR_CUBE_CHOSEN;
                 }
 
-            } else if (mode.equalsIgnoreCase(COLOR_CUBE_CHOOSEN)) {
+            } else if (mode.equals(COLOR_CUBE_CHOSEN)) {
 
-                boolean[] flags = beast.checkHit(x, y, mWidth, mHeight, false);
+                HitInformation hitInformation = beast.selectCube(x, y, mWidth, mHeight, false);
 
-                if (flags[0]) {
+                if (hitInformation.isFound()) {
 
-                    beast.switchColorCurrentCube();
+                    beast.switchColor(hitInformation.getCube());
 
                 } else {
 
@@ -356,7 +358,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
                 if (!sharedPrefs.getBoolean(COLOR_TUTORIAL_FINISHED, false)) {
 
-                    TutorialManager.COLOR = true;
+                    TutorialManager.COLOR_TUTORIAL = true;
                 }
             }
 
@@ -373,7 +375,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
     private void updateRotMatrix() {
 
-        if (mode.equalsIgnoreCase(ALL)) {
+        if (mode.equals(ALL)) {
 
             // First calculate the MVP matrix (Model, View, Projection)
             float[] rotMatrix = new float[MATRIX_SIZE];
@@ -391,7 +393,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
             refresh();
 
-        } else if (mode.equalsIgnoreCase(ONE)) {
+        } else if (mode.equals(ONE)) {
 
             beast.rotateCurrentCube(mYAngle, mXAngle);
 
@@ -512,8 +514,6 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
         x = x2;
         y = y2;
         mCollision = 1;
-
-        tutorialManager.tapped();
     }
 
     // text
