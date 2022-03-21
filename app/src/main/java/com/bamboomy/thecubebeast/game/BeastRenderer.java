@@ -4,6 +4,7 @@ import static com.bamboomy.thecubebeast.game.Mode.ALL;
 import static com.bamboomy.thecubebeast.game.Mode.COLOR;
 import static com.bamboomy.thecubebeast.game.Mode.COLOR_CUBE_CHOSEN;
 import static com.bamboomy.thecubebeast.game.Mode.ONE;
+import static com.bamboomy.thecubebeast.game.Mode.SIDE_OR_CUBE;
 import static com.bamboomy.thecubebeast.game.TutorialManager.COLOR_TUTORIAL_FINISHED;
 
 import android.content.SharedPreferences;
@@ -80,6 +81,9 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
     private boolean sameSide = false;
 
     private ColorImage colorImage = new ColorImage();
+    private SideImage sideImage = new SideImage();
+    private CubeImage cubeImage = new CubeImage();
+    private ChoiceImage choiceImage = new ChoiceImage();
 
     private float[] mMVPMatrix;
 
@@ -131,6 +135,8 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
     private String timeText = "00:00.00";
 
     private MotionListener motionListener;
+    private int cubesColored = 0;
+    private boolean colorTutorialFinished = false;
 
 
     BeastRenderer(Pictures pictures, MotionListener motionListener, GameActivity gameActivity) {
@@ -162,6 +168,9 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
         beast.initTextures();
 
         colorImage.loadGLTexture(activity, R.drawable.color);
+        sideImage.loadGLTexture(activity, R.drawable.side);
+        cubeImage.loadGLTexture(activity, R.drawable.cube);
+        choiceImage.loadGLTexture(activity, R.drawable.cube_or_side);
 
         //TODO: rethink this
         Matrix.setLookAtM(mVMatrix, 0, 0, 0,
@@ -246,11 +255,14 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
         tutorialManager.updateGLTexture(sameSide, mode.equals(ALL));
 
-        tutorialManager.updateColorGLTexture(mode);
+        tutorialManager.updateColorGLTexture(mode, cubesColored, colorTutorialFinished);
 
         tutorialManager.draw(mTextureCoordinateHandle, maPositionHandle, muMVPMatrixHandle, tutorialMatrix, maColorHandle);
 
         colorImage.draw(mTextureCoordinateHandle, maPositionHandle, muMVPMatrixHandle, tutorialMatrix, maColorHandle);
+        sideImage.draw(mTextureCoordinateHandle, maPositionHandle, muMVPMatrixHandle, tutorialMatrix, maColorHandle);
+        cubeImage.draw(mTextureCoordinateHandle, maPositionHandle, muMVPMatrixHandle, tutorialMatrix, maColorHandle);
+        choiceImage.draw(mTextureCoordinateHandle, maPositionHandle, muMVPMatrixHandle, tutorialMatrix, maColorHandle);
 
         updateTimeText();
 
@@ -295,7 +307,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                 if (colorImage.checkTriangleHit(0, new float[1],
                         mHeight, mWidth, x, y, mMVPMatrix)) {
 
-                    mode = COLOR;
+                    mode = SIDE_OR_CUBE;
 
                 } else {
 
@@ -316,6 +328,8 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                     }
                 }
 
+            } else if (mode.equals(SIDE_OR_CUBE)) {
+
             } else if (mode.equals(COLOR)) {
 
                 HitInformation hitInformation = beast.selectCube(x, y, mWidth, mHeight, false);
@@ -335,9 +349,13 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
                     beast.switchColor(hitInformation.getCube());
 
+                    cubesColored++;
+
                 } else {
 
                     mode = ALL;
+
+                    colorTutorialFinished = true;
                 }
             }
 
@@ -544,7 +562,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
             mTextTime.text = timeText;
         }
 
-        if (mTextMissesTitle  != null) {
+        if (mTextMissesTitle != null) {
             mTextMissesTitle.text = "Misses:";
             mTextMisses.text = misses + "";
         }

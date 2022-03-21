@@ -17,6 +17,8 @@
 
 package com.bamboomy.thecubebeast.game;
 
+import static com.bamboomy.thecubebeast.game.Mode.COLOR_CUBE_CHOSEN;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -284,7 +286,7 @@ public class TutorialManager {
 
      */
 
-    void updateColorGLTexture(Mode mode) {
+    void updateColorGLTexture(Mode mode, int cubesColored, boolean colorTutorialFinished) {
 
         if (!COLOR_TUTORIAL) {
             return;
@@ -295,6 +297,29 @@ public class TutorialManager {
             loadGLTexture(R.drawable.aid_color_select_cube);
 
             return;
+        }
+
+        if (colorTutorialFinished) {
+
+            finishTutorial();
+
+            return;
+        }
+
+        if (mode == COLOR_CUBE_CHOSEN) {
+
+            if (cubesColored == 0) {
+
+                loadGLTexture(R.drawable.aid_color_random_color);
+
+                return;
+
+            } else {
+
+                loadGLTexture(R.drawable.aid_color_tap_away);
+
+                return;
+            }
         }
 
         /*
