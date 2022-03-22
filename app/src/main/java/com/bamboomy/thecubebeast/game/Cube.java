@@ -479,4 +479,35 @@ class Cube {
     Side getSide(int index){
         return sides[index];
     }
+
+    public void switchColor(Side side) {
+
+        float red = (float) Math.random();
+        float green = (float) Math.random();
+        float blue = (float) Math.random();
+
+        int counter = 0;
+
+        for (Side sideI : sides) {
+
+            if(sideI == side){
+
+                for (int i = 0; i < 6; i++) {
+
+                    oneCubeFullOfColor[counter++] = red;
+                    oneCubeFullOfColor[counter++] = green;
+                    oneCubeFullOfColor[counter++] = blue;
+                    oneCubeFullOfColor[counter++] = 0.25f;
+                }
+
+                break;
+            }
+
+            counter+=24;
+        }
+
+        colorBuf = ByteBuffer.allocateDirect(oneCubeFullOfColor.length
+                * FLOAT_SIZE_BYTES).order(ByteOrder.nativeOrder()).asFloatBuffer();
+        colorBuf.put(oneCubeFullOfColor).position(0);
+    }
 }

@@ -378,7 +378,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
                 if (hitInformation.isFound()) {
 
-                    beast.switchColor(hitInformation.getSide());
+                    beast.switchColor(hitInformation.getCube(), hitInformation.getSide());
 
                     mode = COLOR_SIDE_CHOSEN;
                 }

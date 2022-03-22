@@ -344,8 +344,8 @@ public class Beast {
         cube.switchColor();
     }
 
-    public void switchColor(Side side) {
+    public void switchColor(Cube cube, Side side) {
 
-        //side.s
+        cube.switchColor(side);
     }
 }
