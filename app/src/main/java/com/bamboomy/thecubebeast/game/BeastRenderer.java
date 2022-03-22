@@ -308,6 +308,8 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
                     mode = SIDE_OR_CUBE;
 
+                    choiceImage.show();
+
                 } else {
 
                     HitInformation hitInformation = beast.checkHit(x, y, mWidth, mHeight, true);
