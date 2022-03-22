@@ -211,6 +211,8 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                 GLES20.GL_REPEAT);
 
         textSetupFontTexture(textures[1]);
+
+        updateRotMatrix();
     }
 
     private void textSetupFontTexture(int hTexture) {
@@ -381,7 +383,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
                     colorTutorialFinished = true;
 
-                    hideChoice();
+                    //hideChoice();
                 }
             }
 
