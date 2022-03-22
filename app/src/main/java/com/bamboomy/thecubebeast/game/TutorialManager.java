@@ -299,6 +299,13 @@ public class TutorialManager {
             return;
         }
 
+        if (mode == Mode.SIDE) {
+
+            loadGLTexture(R.drawable.aid_color_select_side);
+
+            return;
+        }
+
         if (colorTutorialFinished) {
 
             finishTutorial();

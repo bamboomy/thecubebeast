@@ -308,9 +308,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
                     mode = SIDE_OR_CUBE;
 
-                    choiceImage.show();
-                    cubeImage.show();
-                    sideImage.show();
+                    showChoice();
 
                 } else {
 
@@ -382,6 +380,8 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                     mode = ALL;
 
                     colorTutorialFinished = true;
+
+                    hideChoice();
                 }
             }
 
@@ -404,6 +404,20 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
             refresh();
         }
+    }
+
+    private void showChoice() {
+
+        choiceImage.show();
+        cubeImage.show();
+        sideImage.show();
+    }
+
+    private void hideChoice() {
+
+        choiceImage.hide();
+        cubeImage.hide();
+        sideImage.hide();
     }
 
     private void drawBeast() {

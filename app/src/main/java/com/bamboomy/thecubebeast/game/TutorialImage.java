@@ -63,7 +63,7 @@ public class TutorialImage {
 
     private FloatBuffer vertexBuffer, colorBuffer; // buffer holding the vertices
 
-    private static float x1 = -2f, x2 = -0.75f, y1= -0.5f, y2 = 0.5f, z = -2f;
+    private static float x1 = -1.75f, x2 = -0.5f, y1= -0.5f, y2 = 0.5f, z = -2f;
 
     private static final float[] vertices = {
             // X, Y, Z, W
