@@ -1,9 +1,11 @@
 package com.bamboomy.thecubebeast.game;
 
 import static com.bamboomy.thecubebeast.game.Mode.ALL;
-import static com.bamboomy.thecubebeast.game.Mode.COLOR;
 import static com.bamboomy.thecubebeast.game.Mode.COLOR_CUBE_CHOSEN;
+import static com.bamboomy.thecubebeast.game.Mode.COLOR_SIDE_CHOSEN;
+import static com.bamboomy.thecubebeast.game.Mode.CUBE;
 import static com.bamboomy.thecubebeast.game.Mode.ONE;
+import static com.bamboomy.thecubebeast.game.Mode.SIDE;
 import static com.bamboomy.thecubebeast.game.Mode.SIDE_OR_CUBE;
 import static com.bamboomy.thecubebeast.game.TutorialManager.COLOR_TUTORIAL_FINISHED;
 
@@ -297,9 +299,6 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                 if (beast.selectCube(x, y, mWidth, mHeight, true).isFound()) {
 
                     mode = ONE;
-
-                    // TODO: revise
-                    colorImage.hide();
                 }
 
             } else if (mode.equals(ONE)) {
@@ -330,7 +329,30 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
             } else if (mode.equals(SIDE_OR_CUBE)) {
 
-            } else if (mode.equals(COLOR)) {
+                if (cubeImage.checkTriangleHit(0, new float[1],
+                        mHeight, mWidth, x, y, mMVPMatrix)) {
+
+                    mode = CUBE;
+                }
+
+                if (sideImage.checkTriangleHit(0, new float[1],
+                        mHeight, mWidth, x, y, mMVPMatrix)) {
+
+                    mode = SIDE;
+                }
+
+            } else if (mode.equals(SIDE)) {
+
+                HitInformation hitInformation = beast.checkHit(x, y, mWidth, mHeight, false);
+
+                if (hitInformation.isFound()) {
+
+                    beast.switchColor(hitInformation.getSide());
+
+                    mode = COLOR_SIDE_CHOSEN;
+                }
+
+            } else if (mode.equals(CUBE)) {
 
                 HitInformation hitInformation = beast.selectCube(x, y, mWidth, mHeight, false);
 

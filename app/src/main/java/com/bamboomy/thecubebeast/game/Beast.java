@@ -225,7 +225,7 @@ public class Beast {
         for (Cube cube : cubes) {
 
             for (int f = 0; f < NUMBER_OF_SIDES; f++) { // Loop over all the faces
-                for (int t = 0; t < 2; t++) { // Loop over the triangles per
+                for (int t = 0; t < 2; t++) { // Loop over the triangles per side
 
                     if (cube.checkTriangleHit(NUMBER_OF_SIDES * 4 * f + NUMBER_OF_SIDES * 2 * t,
                             depth, mHeight, mWidth, x, y)
@@ -342,5 +342,10 @@ public class Beast {
     public void switchColor(Cube cube) {
 
         cube.switchColor();
+    }
+
+    public void switchColor(Side side) {
+
+        //side.s
     }
 }
