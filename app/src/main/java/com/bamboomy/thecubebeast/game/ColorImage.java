@@ -64,14 +64,17 @@ public class ColorImage {
 
     private FloatBuffer vertexBuffer, colorBuffer; // buffer holding the vertices
 
+    //private static float x1 = -1.75f, x2 = -0.5f, y1= -0.5f, y2 = 0.5f, z = -2f;
+    private static float x1 = -1.75f, x2 = -1f, y1= 0.0f, y2 = 1.0f, z = -2f;
+
     private static final float[] vertices = {
             // X, Y, Z, W
-            -2.25f, 0.75f, -1.2f, 1.0f,
-            -1.75f, 0.75f, -1.2f, 1.0f,
-            -1.75f, 1.25f, -1.2f, 1.0f,
-            -2.25f, 0.75f, -1.2f, 1.0f,
-            -1.75f, 1.25f, -1.2f, 1.0f,
-            -2.25f, 1.25f, -1.2f, 1.0f,};
+            x1, y1, z, 1.0f,
+            x2, y1, z, 1.0f,
+            x2, y2, z, 1.0f,
+            x1, y1, z, 1.0f,
+            x2, y2, z, 1.0f,
+            x1, y2, z, 1.0f,};
 
     private static final int TEXTURE_COORD_DATA_SIZE = 2;
     private static final int FLOAT_SIZE_BYTES = 4;
@@ -261,11 +264,15 @@ public class ColorImage {
         touchAffVector[1] = fTInvMatrix[2] * touchVector[0] + fTInvMatrix[3]
                 * touchVector[1];
 
+
         // The new x and y coordinates must be positive and less than 1.
-        if ((touchAffVector[0] < 0.0f) || (touchAffVector[0] > 1)) {
+        //if ((touchAffVector[0] < 0.0f) || (touchAffVector[0] > 1)) {
+        //if ((touchAffVector[0] < 0.0f) || (touchAffVector[0] > 1)) {
+        if ((touchAffVector[0] > 1)) {
             return false;
         }
 
+        //if ((touchAffVector[1] < 0.0f) || (touchAffVector[1] > 1)) {
         if ((touchAffVector[1] < 0.0f) || (touchAffVector[1] > 1)) {
             return false;
         }

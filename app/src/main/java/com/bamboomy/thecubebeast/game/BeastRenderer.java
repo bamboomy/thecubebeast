@@ -73,7 +73,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
     private int x, y;
 
-    private Mode mode = ALL;
+    private Mode mode = ALL, previousMode = null;
 
     private GameActivity activity;
 
@@ -211,8 +211,6 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                 GLES20.GL_REPEAT);
 
         textSetupFontTexture(textures[1]);
-
-        updateRotMatrix();
     }
 
     private void textSetupFontTexture(int hTexture) {
@@ -298,15 +296,29 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
             if (mode.equals(ALL)) {
 
-                if (beast.selectCube(x, y, mWidth, mHeight, true).isFound()) {
+                if (colorImage.checkTriangleHit(0, new float[1],
+                        mHeight, mWidth, x, y, tutorialMatrix)) {
 
-                    mode = ONE;
+                    mode = SIDE_OR_CUBE;
+
+                    previousMode = ALL;
+
+                    showChoice();
+
+                } else {
+
+                    if (beast.selectCube(x, y, mWidth, mHeight, true).isFound()) {
+
+                        mode = ONE;
+                    }
                 }
 
             } else if (mode.equals(ONE)) {
 
                 if (colorImage.checkTriangleHit(0, new float[1],
                         mHeight, mWidth, x, y, tutorialMatrix)) {
+
+                    previousMode = ONE;
 
                     mode = SIDE_OR_CUBE;
 
@@ -333,16 +345,31 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
             } else if (mode.equals(SIDE_OR_CUBE)) {
 
-                if (cubeImage.checkTriangleHit(0, new float[1],
+                if (colorImage.checkTriangleHit(0, new float[1],
                         mHeight, mWidth, x, y, tutorialMatrix)) {
 
-                    mode = CUBE;
-                }
+                    if(previousMode != null){
 
-                if (sideImage.checkTriangleHit(0, new float[1],
-                        mHeight, mWidth, x, y, tutorialMatrix)) {
+                        mode = previousMode;
 
-                    mode = SIDE;
+                        previousMode = null;
+                    }
+
+                    hideChoice();
+
+                } else {
+
+                    if (cubeImage.checkTriangleHit(0, new float[1],
+                            mHeight, mWidth, x, y, tutorialMatrix)) {
+
+                        mode = CUBE;
+                    }
+
+                    if (sideImage.checkTriangleHit(0, new float[1],
+                            mHeight, mWidth, x, y, tutorialMatrix)) {
+
+                        mode = SIDE;
+                    }
                 }
 
             } else if (mode.equals(SIDE)) {
