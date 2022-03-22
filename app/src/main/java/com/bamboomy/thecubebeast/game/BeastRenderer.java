@@ -304,11 +304,13 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
             } else if (mode.equals(ONE)) {
 
                 if (colorImage.checkTriangleHit(0, new float[1],
-                        mHeight, mWidth, x, y, mMVPMatrix)) {
+                        mHeight, mWidth, x, y, tutorialMatrix)) {
 
                     mode = SIDE_OR_CUBE;
 
                     choiceImage.show();
+                    cubeImage.show();
+                    sideImage.show();
 
                 } else {
 
@@ -332,13 +334,13 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
             } else if (mode.equals(SIDE_OR_CUBE)) {
 
                 if (cubeImage.checkTriangleHit(0, new float[1],
-                        mHeight, mWidth, x, y, mMVPMatrix)) {
+                        mHeight, mWidth, x, y, tutorialMatrix)) {
 
                     mode = CUBE;
                 }
 
                 if (sideImage.checkTriangleHit(0, new float[1],
-                        mHeight, mWidth, x, y, mMVPMatrix)) {
+                        mHeight, mWidth, x, y, tutorialMatrix)) {
 
                     mode = SIDE;
                 }

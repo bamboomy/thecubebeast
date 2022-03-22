@@ -292,15 +292,12 @@ public class TutorialManager {
             return;
         }
 
-        /*
-        if (mode == Mode.COLOR) {
+        if (mode == Mode.CUBE) {
 
             loadGLTexture(R.drawable.aid_color_select_cube);
 
             return;
         }
-
-         */
 
         if (colorTutorialFinished) {
 

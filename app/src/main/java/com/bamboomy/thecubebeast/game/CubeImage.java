@@ -64,7 +64,7 @@ public class CubeImage {
 
     private FloatBuffer vertexBuffer, colorBuffer; // buffer holding the vertices
 
-    private static final float x1 = -2.25f, x2 = -1.75f, y1 = 0.75f, y2 = 1.25f, z = -1.2f;
+    private static final float x1 = 0f, x2 = 0.5f, y1 = -0.5f, y2 = 0f, z = -1.5f;
 
     private static final float[] vertices = {
             // X, Y, Z, W
