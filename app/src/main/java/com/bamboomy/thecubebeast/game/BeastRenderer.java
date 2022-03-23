@@ -86,6 +86,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
     private SideImage sideImage = new SideImage();
     private CubeImage cubeImage = new CubeImage();
     private ChoiceImage choiceImage = new ChoiceImage();
+    private FeedbackImage feedbackImage;
 
     private float[] mMVPMatrix;
 
@@ -149,6 +150,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
         tutorialManager = new TutorialManager(activity);
         colorImage = new ColorImage(activity);
+        feedbackImage = new FeedbackImage(activity);
 
         this.motionListener = motionListener;
 
@@ -172,6 +174,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
         sideImage.loadGLTexture(activity, R.drawable.side);
         cubeImage.loadGLTexture(activity, R.drawable.cube);
         choiceImage.loadGLTexture(activity, R.drawable.cube_or_side);
+        feedbackImage.loadGLTexture(activity, R.drawable.cube_or_side);
 
         //TODO: rethink this
         Matrix.setLookAtM(mVMatrix, 0, 0, 0,
@@ -252,6 +255,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
         if (Tupple.popIsOneSolved()) {
 
             activity.raw();
+            feedbackImage.show();
         }
 
         tutorialManager.updateGLTexture(sameSide, mode.equals(ALL));
@@ -266,6 +270,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
         sideImage.draw(mTextureCoordinateHandle, maPositionHandle, muMVPMatrixHandle, tutorialMatrix, maColorHandle);
         cubeImage.draw(mTextureCoordinateHandle, maPositionHandle, muMVPMatrixHandle, tutorialMatrix, maColorHandle);
         choiceImage.draw(mTextureCoordinateHandle, maPositionHandle, muMVPMatrixHandle, tutorialMatrix, maColorHandle);
+        feedbackImage.draw(mTextureCoordinateHandle, maPositionHandle, muMVPMatrixHandle, tutorialMatrix, maColorHandle);
 
         updateTimeText();
 
