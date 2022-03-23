@@ -25,6 +25,8 @@ import android.opengl.GLUtils;
 import android.opengl.Matrix;
 import android.util.Log;
 
+import com.bamboomy.thecubebeast.R;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -65,7 +67,7 @@ public class ColorImage {
     private FloatBuffer vertexBuffer, colorBuffer; // buffer holding the vertices
 
     //private static float x1 = -1.75f, x2 = -0.5f, y1= -0.5f, y2 = 0.5f, z = -2f;
-    private static float x1 = -1.75f, x2 = -1f, y1= 0.5f, y2 = 1.0f, z = -2f;
+    private static float x1 = -1.75f, x2 = -1f, y1 = 0.5f, y2 = 1.0f, z = -2f;
 
     private static final float[] vertices = {
             // X, Y, Z, W
@@ -81,7 +83,10 @@ public class ColorImage {
     private static final int TRIANGLE_VERTICES_DATA_STRIDE_BYTES = 4 * FLOAT_SIZE_BYTES;
     private boolean hidden = true;
 
-    ColorImage() {
+    private Context mContext;
+    private boolean active = false;
+
+    ColorImage(Context mContext) {
 
         // a float has 4 bytes so we allocate for each coordinate 4 bytes
         ByteBuffer byteBuffer = ByteBuffer.allocateDirect(vertices.length * 4);
@@ -105,6 +110,8 @@ public class ColorImage {
         colorBuffer = ByteBuffer.allocateDirect(complyingWithShader.length
                 * FLOAT_SIZE_BYTES).order(ByteOrder.nativeOrder()).asFloatBuffer();
         colorBuffer.put(complyingWithShader).position(0);
+
+        this.mContext = mContext;
     }
 
     /**
@@ -298,5 +305,24 @@ public class ColorImage {
     void hide() {
 
         hidden = true;
+    }
+
+    public void active() {
+
+        active = true;
+    }
+
+    public void passive() {
+
+        active = false;
+    }
+
+    public void updateImage() {
+
+        if (active) {
+            loadGLTexture(mContext, R.drawable.color_active);
+        } else {
+            loadGLTexture(mContext, R.drawable.color);
+        }
     }
 }

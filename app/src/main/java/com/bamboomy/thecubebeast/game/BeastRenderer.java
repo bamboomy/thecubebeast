@@ -82,7 +82,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
     private float[] tutorialMatrix = null;
     private boolean sameSide = false;
 
-    private ColorImage colorImage = new ColorImage();
+    private ColorImage colorImage;
     private SideImage sideImage = new SideImage();
     private CubeImage cubeImage = new CubeImage();
     private ChoiceImage choiceImage = new ChoiceImage();
@@ -150,6 +150,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
         this.activity = gameActivity;
 
         tutorialManager = new TutorialManager(activity);
+        colorImage = new ColorImage(activity);
 
         this.motionListener = motionListener;
 
@@ -257,6 +258,8 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
         tutorialManager.updateGLTexture(sameSide, mode.equals(ALL));
 
+        colorImage.updateImage();
+
         tutorialManager.updateColorGLTexture(mode, cubesColored, sidesColored, colorTutorialFinished);
 
         tutorialManager.draw(mTextureCoordinateHandle, maPositionHandle, muMVPMatrixHandle, tutorialMatrix, maColorHandle);
@@ -305,6 +308,8 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
                     showChoice();
 
+                    colorImage.active();
+
                 } else {
 
                     if (beast.selectCube(x, y, mWidth, mHeight, true).isFound()) {
@@ -323,6 +328,8 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                     mode = SIDE_OR_CUBE;
 
                     showChoice();
+
+                    colorImage.active();
 
                 } else {
 
@@ -356,6 +363,8 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                     }
 
                     hideChoice();
+
+                    colorImage.passive();
 
                 } else {
 
@@ -414,7 +423,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
                     colorTutorialFinished = true;
 
-                    hideChoice();
+                    colorImage.passive();
                 }
             } else if (mode.equals(COLOR_SIDE_CHOSEN)) {
 
@@ -431,6 +440,8 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                     mode = ALL;
 
                     colorTutorialFinished = true;
+
+                    colorImage.passive();
                 }
             }
 
