@@ -18,6 +18,7 @@
 package com.bamboomy.thecubebeast.game;
 
 import static com.bamboomy.thecubebeast.game.Mode.COLOR_CUBE_CHOSEN;
+import static com.bamboomy.thecubebeast.game.Mode.COLOR_SIDE_CHOSEN;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -286,7 +287,7 @@ public class TutorialManager {
 
      */
 
-    void updateColorGLTexture(Mode mode, int cubesColored, boolean colorTutorialFinished) {
+    void updateColorGLTexture(Mode mode, int cubesColored, int sidesColored, boolean colorTutorialFinished) {
 
         if (!COLOR_TUTORIAL) {
             return;
@@ -328,6 +329,24 @@ public class TutorialManager {
                 return;
             }
         }
+
+        if (mode == COLOR_SIDE_CHOSEN) {
+
+            if (sidesColored == 0) {
+
+                loadGLTexture(R.drawable.aid_color_other_sides);
+
+                return;
+
+            } else {
+
+                loadGLTexture(R.drawable.aid_color_tap_away);
+
+                return;
+            }
+        }
+
+
 
         /*
 

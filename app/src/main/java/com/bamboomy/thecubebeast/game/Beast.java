@@ -259,9 +259,14 @@ public class Beast {
                 current = null;
             }
 
+            /*
+            TODO: check whether current is needed...
+
         } else {
 
             hitInformation.setFound(found != null && found.equals(current));
+
+             */
         }
 
         return hitInformation;

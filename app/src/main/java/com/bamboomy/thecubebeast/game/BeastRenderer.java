@@ -137,7 +137,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
     private String timeText = "00:00.00";
 
     private MotionListener motionListener;
-    private int cubesColored = 0;
+    private int cubesColored = 0, sidesColored = 0;
     private boolean colorTutorialFinished = false;
 
 
@@ -257,7 +257,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
         tutorialManager.updateGLTexture(sameSide, mode.equals(ALL));
 
-        tutorialManager.updateColorGLTexture(mode, cubesColored, colorTutorialFinished);
+        tutorialManager.updateColorGLTexture(mode, cubesColored, sidesColored, colorTutorialFinished);
 
         tutorialManager.draw(mTextureCoordinateHandle, maPositionHandle, muMVPMatrixHandle, tutorialMatrix, maColorHandle);
 
@@ -363,12 +363,16 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                             mHeight, mWidth, x, y, tutorialMatrix)) {
 
                         mode = CUBE;
+
+                        hideChoice();
                     }
 
                     if (sideImage.checkTriangleHit(0, new float[1],
                             mHeight, mWidth, x, y, tutorialMatrix)) {
 
                         mode = SIDE;
+
+                        hideChoice();
                     }
                 }
 
@@ -410,7 +414,23 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
                     colorTutorialFinished = true;
 
-                    //hideChoice();
+                    hideChoice();
+                }
+            } else if (mode.equals(COLOR_SIDE_CHOSEN)) {
+
+                HitInformation hitInformation = beast.checkHit(x, y, mWidth, mHeight, false);
+
+                if (hitInformation.isFound()) {
+
+                    beast.switchColor(hitInformation.getCube(), hitInformation.getSide());
+
+                    sidesColored++;
+
+                } else {
+
+                    mode = ALL;
+
+                    colorTutorialFinished = true;
                 }
             }
 
