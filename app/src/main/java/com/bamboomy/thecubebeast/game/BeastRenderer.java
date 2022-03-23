@@ -108,6 +108,8 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
     private TextObject mTextTime;
     private TextObject mTextMissesTitle;
     private TextObject mTextMisses;
+    private TextObject mTextSolvedTitle;
+    private TextObject mTextSolved;
 
     private int mTextProgram;
 
@@ -136,7 +138,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
     private String timeText = "00:00.00";
 
     private MotionListener motionListener;
-    private int cubesColored = 0, sidesColored = 0;
+    private int cubesColored = 0, sidesColored = 0, solved = 0;
     private boolean colorTutorialFinished = false;
 
 
@@ -154,7 +156,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
         this.motionListener = motionListener;
 
-        textSetupManagers(true, true, true);
+        textSetupManagers(true, true, true, true);
 
         GameMaster.getInstance().setRenderer(this);
     }
@@ -256,6 +258,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
             activity.raw();
             feedbackImage.show();
+            solved++;
         }
 
         tutorialManager.updateGLTexture(sameSide, mode.equals(ALL));
@@ -358,7 +361,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                 if (colorImage.checkTriangleHit(0, new float[1],
                         mHeight, mWidth, x, y, tutorialMatrix)) {
 
-                    if(previousMode != null){
+                    if (previousMode != null) {
 
                         mode = previousMode;
 
@@ -672,6 +675,11 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
             mTextManagerStatus.PrepareDraw();
             mTextManagerStatus.Draw(mTextProjectionMatrix);
         }
+
+        if (mTextSolvedTitle != null) {
+            mTextSolvedTitle.text = "Solved:";
+            mTextSolved.text = solved + "";
+        }
     }
 
     private void updateTimeText() {
@@ -680,7 +688,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
         //motionListener.requestRender();
     }
 
-    private void textSetupManagers(boolean tapsEnabled, boolean time, boolean misses) {
+    private void textSetupManagers(boolean tapsEnabled, boolean time, boolean misses, boolean solved) {
 
         if (tapsEnabled || time || misses) {
             // Text in front of the screen
@@ -712,6 +720,19 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                 mTextMisses.color = new float[]{0.23f, 0.63f, 0.19f, 1.0f}; // Green-ish
 
                 mTextManagerStatus.addText(mTextMisses);
+            }
+
+            if (solved) {
+
+                mTextSolvedTitle = new TextObject("", -0.95f, -0.4f);
+                mTextSolvedTitle.color = new float[]{0.23f, 0.63f, 0.19f, 1.0f}; // Green-ish
+
+                mTextManagerStatus.addText(mTextSolvedTitle);
+
+                mTextSolved = new TextObject("", -0.95f, -0.6f);
+                mTextSolved.color = new float[]{0.23f, 0.63f, 0.19f, 1.0f}; // Green-ish
+
+                mTextManagerStatus.addText(mTextSolved);
             }
 
             if (time) {
