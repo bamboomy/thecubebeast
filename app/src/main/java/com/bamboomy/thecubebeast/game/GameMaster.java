@@ -227,11 +227,6 @@ public class GameMaster {
         isOneTupleSolved = true;
     }
 
-    boolean showColor() {
-
-        return taps >= 10 && !isOneTupleSolved;
-    }
-
     void setRenderer(BeastRenderer beastRenderer) {
 
         this.beastRenderer = beastRenderer;

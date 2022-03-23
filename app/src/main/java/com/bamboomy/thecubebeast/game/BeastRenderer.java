@@ -98,8 +98,6 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
             0.0f, 0.0f, 1, 0.0f,
             0.0f, 0.0f, 0.0f, 1};
 
-    private boolean shouldShowColor = false;
-
     // text
 
     private TextManager mTextManagerStatus;
@@ -447,9 +445,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
             mCollision = 0;
 
-            if (GameMaster.getInstance().showColor() && !shouldShowColor) {
-
-                shouldShowColor = true;
+            if (misses > 5) {
 
                 colorImage.show();
 

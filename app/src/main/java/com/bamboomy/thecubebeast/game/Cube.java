@@ -459,7 +459,7 @@ class Cube {
         float green = (float) Math.random();
         float blue = (float) Math.random();
 
-        oneCubeFullOfColor = new float[36 * 4];
+        //oneCubeFullOfColor = new float[36 * 4];
 
         int counter = 0;
 
