@@ -61,6 +61,10 @@ public class Tupple {
 
         solved = true;
 
+        for (Side side: sides){
+            side.destroy();
+        }
+
         GameMaster.getInstance().oneSolved();
     }
 

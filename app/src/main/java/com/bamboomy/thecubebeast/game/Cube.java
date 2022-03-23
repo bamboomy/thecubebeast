@@ -290,6 +290,13 @@ class Cube {
         // draw the sides of the cube separately
         for (Side side : sides) {
 
+            if (side.isDestroyed()) {
+
+                i++;
+
+                continue;
+            }
+
             // Set the position for Color
             colorBuf.position(0);
             GLES20.glVertexAttribPointer(maColorHandle, 4, GLES20.GL_FLOAT, false,
@@ -476,7 +483,7 @@ class Cube {
         colorBuf.put(oneCubeFullOfColor).position(0);
     }
 
-    Side getSide(int index){
+    Side getSide(int index) {
         return sides[index];
     }
 
@@ -490,7 +497,7 @@ class Cube {
 
         for (Side sideI : sides) {
 
-            if(sideI == side){
+            if (sideI == side) {
 
                 for (int i = 0; i < 6; i++) {
 
@@ -503,7 +510,7 @@ class Cube {
                 break;
             }
 
-            counter+=24;
+            counter += 24;
         }
 
         colorBuf = ByteBuffer.allocateDirect(oneCubeFullOfColor.length

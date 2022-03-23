@@ -11,6 +11,8 @@ import com.bamboomy.thecubebeast.R;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import lombok.Getter;
+
 class Side {
 
     private int[] textures;
@@ -25,6 +27,9 @@ class Side {
     private Bitmap bitmap = null;
 
     private boolean hidden = false, hiding = false;
+
+    @Getter
+    private boolean destroyed = false;
 
     Side(GameActivity gameActivity, boolean chooseUnchosen) {
 
@@ -162,5 +167,10 @@ class Side {
         bitmap = picture;
 
         dirty = true;
+    }
+
+    public void destroy() {
+
+        destroyed = true;
     }
 }

@@ -231,16 +231,19 @@ public class Beast {
                             depth, mHeight, mWidth, x, y)
                             && ((curFace == -1) || (depth[0] < curDepth))) {
 
-                        curFace = f;
-                        curDepth = depth[0];
+                        if (!cube.getSide(f).isDestroyed()) {
 
-                        found = cube;
+                            curFace = f;
+                            curDepth = depth[0];
 
-                        side = f;
+                            found = cube;
 
-                        hitInformation = new HitInformation(true, found, found.getSide(side));
+                            side = f;
 
-                        break;
+                            hitInformation = new HitInformation(true, found, found.getSide(side));
+
+                            break;
+                        }
                     }
                 }
             }
@@ -291,14 +294,17 @@ public class Beast {
                             depth, mHeight, mWidth, x, y)
                             && ((curFace == -1) || (depth[0] < curDepth))) {
 
-                        curFace = f;
-                        curDepth = depth[0];
+                        if (!cube.getSide(f).isDestroyed()) {
 
-                        found = cube;
+                            curFace = f;
+                            curDepth = depth[0];
 
-                        result = new HitInformation(true, found, found.getSide(curFace));
+                            found = cube;
 
-                        break;
+                            result = new HitInformation(true, found, found.getSide(curFace));
+
+                            break;
+                        }
                     }
                 }
             }
