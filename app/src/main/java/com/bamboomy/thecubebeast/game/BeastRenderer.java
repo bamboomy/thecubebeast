@@ -343,9 +343,6 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
                     boolean cubeHit = hitInformation.isFound();
 
-                    // TODO: revise if restating tutorial
-                    //sameSide = flags[1];
-
                     if (!cubeHit) {
 
                         mode = ALL;
@@ -400,6 +397,14 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                     beast.switchColor(hitInformation.getCube(), hitInformation.getSide());
 
                     mode = COLOR_SIDE_CHOSEN;
+
+                } else {
+
+                    mode = ALL;
+
+                    beast.toggleCube();
+
+                    colorImage.passive();
                 }
 
             } else if (mode.equals(CUBE)) {
@@ -411,6 +416,14 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                     beast.switchColor(hitInformation.getCube());
 
                     mode = COLOR_CUBE_CHOSEN;
+
+                } else {
+
+                    mode = ALL;
+
+                    beast.toggleCube();
+
+                    colorImage.passive();
                 }
 
             } else if (mode.equals(COLOR_CUBE_CHOSEN)) {
@@ -444,6 +457,8 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                 } else {
 
                     mode = ALL;
+
+                    beast.toggleCube();
 
                     colorTutorialFinished = true;
 
@@ -513,7 +528,10 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
         } else if (mode.equals(ONE)) {
 
-            beast.rotateCurrentCube(mYAngle, mXAngle);
+            if (!beast.rotateCurrentCube(mYAngle, mXAngle)) {
+
+                mode = ALL;
+            }
 
             refresh();
         }

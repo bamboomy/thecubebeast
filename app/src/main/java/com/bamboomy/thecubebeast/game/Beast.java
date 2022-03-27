@@ -255,11 +255,9 @@ public class Beast {
 
                 found.tap(side);
 
-            } else if (current != null) {
+            } else {
 
-                current.toggleCube();
-
-                current = null;
+                toggleCube();
             }
 
             /*
@@ -273,6 +271,16 @@ public class Beast {
         }
 
         return hitInformation;
+    }
+
+    public void toggleCube(){
+
+        if (current != null) {
+
+            current.toggleCube();
+
+            current = null;
+        }
     }
 
     public HitInformation selectCube(int x, int y, int mWidth, int mHeight, boolean shouldAct) {
@@ -324,9 +332,15 @@ public class Beast {
         return result;
     }
 
-    void rotateCurrentCube(float mYAngle, float mXAngle) {
+    boolean rotateCurrentCube(float mYAngle, float mXAngle) {
 
-        current.rotate(mYAngle, mXAngle, mCoordSystemData);
+        if (current != null) {
+            current.rotate(mYAngle, mXAngle, mCoordSystemData);
+        } else {
+            return false;
+        }
+
+        return true;
     }
 
     void clean() {
