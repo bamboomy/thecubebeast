@@ -57,6 +57,11 @@ public class MenuActivity extends FragmentActivity {
             MenuActivity.this.startActivity(myIntent);
         });
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("test");
+
+        builder.create().show();
+
         harder = findViewById(R.id.harder);
 
         harder.setOnClickListener(v -> {

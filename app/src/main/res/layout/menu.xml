@@ -38,61 +38,132 @@
         android:layout_width="1dp"
         android:layout_height="40dp"></View>
 
-    <TextView
-        android:id="@+id/easy"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/easy"
-        android:gravity="center_horizontal"
-        android:scaleType="centerInside"
-        android:text="@string/easy"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#0F0" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/easy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/easy"
+            android:gravity="center_horizontal"
+            android:scaleType="centerInside"
+            android:text="@string/easy"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#0F0" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="1dp"></View>
+
+        <ImageView
+            android:id="@+id/info_easy"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_circle_info"
+            android:tint="#0F0" />
+
+    </LinearLayout>
 
     <View
         android:layout_width="1dp"
         android:layout_height="40dp"></View>
 
-    <TextView
-        android:id="@+id/harder"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/harder"
-        android:gravity="center_horizontal"
-        android:scaleType="centerInside"
-        android:text="@string/harder"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#0F0" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/harder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/harder"
+            android:gravity="center_horizontal"
+            android:scaleType="centerInside"
+            android:text="@string/harder"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#0F0" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="1dp"></View>
+
+        <ImageView
+            android:id="@+id/info_harder"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_circle_info"
+            android:tint="#0F0" />
+
+    </LinearLayout>
 
     <View
         android:layout_width="1dp"
         android:layout_height="30dp"></View>
 
-    <TextView
-        android:id="@+id/difficult"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/difficult"
-        android:gravity="center_horizontal"
-        android:scaleType="centerInside"
-        android:text="@string/difficult"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#0F0" />
+        android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/difficult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/difficult"
+            android:gravity="center_horizontal"
+            android:scaleType="centerInside"
+            android:text="@string/difficult"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#0F0" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="1dp"></View>
+
+        <ImageView
+            android:id="@+id/info_difficult"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_circle_info"
+            android:tint="#0F0" />
+
+    </LinearLayout>
 
     <View
         android:layout_width="1dp"
         android:layout_height="30dp"></View>
 
-    <TextView
-        android:id="@+id/real_deal"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/real_deal"
-        android:gravity="center_horizontal"
-        android:scaleType="centerInside"
-        android:text="@string/real_deal"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#0F0" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/real_deal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/real_deal"
+            android:gravity="center_horizontal"
+            android:scaleType="centerInside"
+            android:text="@string/real_deal"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#0F0" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="1dp"></View>
+
+        <ImageView
+            android:id="@+id/info_real_deal"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_circle_info"
+            android:tint="#0F0" />
+
+    </LinearLayout>
 
 </LinearLayout>

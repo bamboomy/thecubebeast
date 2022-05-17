@@ -145,7 +145,7 @@ public class GameMaster {
 
             beastRenderer.addMiss();
 
-            if(hider != null){
+            if (hider != null) {
 
                 hider.cancelled = true;
                 hider = null;
