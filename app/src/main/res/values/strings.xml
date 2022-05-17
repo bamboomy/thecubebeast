@@ -10,5 +10,10 @@
     <string name="ok">OK</string>
 
     <string name="facebook_app_id">2172139316370662</string>
+    <string name="easy">\"easy\"</string>
+    <string name="harder">harder</string>
+    <string name="difficult">difficult</string>
+    <string name="real_deal">the real deal</string>
+    <string name="cube_beast">The Cube Beast</string>
 
 </resources>
