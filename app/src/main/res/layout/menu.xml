@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2016 Sander Theetaert
+  ~ Copyright (c) 2022 Sander Theetaert
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -53,21 +53,6 @@
         android:layout_width="1dp"
         android:layout_height="40dp"></View>
 
-    <!--TextView
-        android:id="@+id/multiPlayer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/multi_player"
-        android:gravity="center_horizontal"
-        android:scaleType="centerInside"
-        android:text="@string/multi_player"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#0F0" />
-
-    <View
-        android:layout_width="1dp"
-        android:layout_height="40dp"></View-->
-
     <TextView
         android:id="@+id/harder"
         android:layout_width="wrap_content"
@@ -82,18 +67,6 @@
     <View
         android:layout_width="1dp"
         android:layout_height="30dp"></View>
-
-    <!--TextView
-        android:id="@+id/share"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/share"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#0F0" />
-
-    <View
-        android:layout_width="1dp"
-        android:layout_height="30dp"></View-->
 
     <TextView
         android:id="@+id/difficult"
