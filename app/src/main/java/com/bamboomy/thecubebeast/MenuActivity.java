@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.bamboomy.thecubebeast.R;
 import com.bamboomy.thecubebeast.game.GameActivity;
+import com.bamboomy.thecubebeast.game.GameMode;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,6 +54,7 @@ public class MenuActivity extends FragmentActivity {
         easy = findViewById(R.id.easy);
 
         easy.setOnClickListener(v -> {
+            GameActivity.GAME_MODE = GameMode.EASY;
             Intent myIntent = new Intent(MenuActivity.this, GameActivity.class);
             MenuActivity.this.startActivity(myIntent);
         });
@@ -65,6 +67,7 @@ public class MenuActivity extends FragmentActivity {
         harder = findViewById(R.id.harder);
 
         harder.setOnClickListener(v -> {
+            GameActivity.GAME_MODE = GameMode.HARDER;
             Intent myIntent = new Intent(MenuActivity.this, GameActivity.class);
             MenuActivity.this.startActivity(myIntent);
         });
@@ -72,6 +75,7 @@ public class MenuActivity extends FragmentActivity {
         difficult = findViewById(R.id.difficult);
 
         difficult.setOnClickListener(v -> {
+            GameActivity.GAME_MODE = GameMode.DIFFICULT;
             Intent myIntent = new Intent(MenuActivity.this, GameActivity.class);
             MenuActivity.this.startActivity(myIntent);
         });
@@ -79,6 +83,7 @@ public class MenuActivity extends FragmentActivity {
         realDeal = findViewById(R.id.real_deal);
 
         realDeal.setOnClickListener(v -> {
+            GameActivity.GAME_MODE = GameMode.REAL_DEAL;
             Intent myIntent = new Intent(MenuActivity.this, GameActivity.class);
             MenuActivity.this.startActivity(myIntent);
         });

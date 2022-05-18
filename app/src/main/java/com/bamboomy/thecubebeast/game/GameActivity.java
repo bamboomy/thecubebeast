@@ -31,6 +31,8 @@ public class GameActivity extends AppCompatActivity implements MediaPlayer.OnErr
 
     private int width, height;
 
+    public static GameMode GAME_MODE = null;
+
     private int[] raws = {
             R.raw.raw1, R.raw.raw2, R.raw.raw3, R.raw.raw4
     };
