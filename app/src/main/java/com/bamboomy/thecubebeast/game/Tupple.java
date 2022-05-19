@@ -38,6 +38,11 @@ public class Tupple {
         return index == MAX;
     }
 
+    boolean isBrandNew() {
+
+        return index == 0;
+    }
+
     boolean isNew() {
 
         return index == 1;

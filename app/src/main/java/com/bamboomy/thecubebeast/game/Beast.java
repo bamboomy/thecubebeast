@@ -1,9 +1,11 @@
 package com.bamboomy.thecubebeast.game;
 
+import static com.bamboomy.thecubebeast.MainActivity.TAG;
 import static com.bamboomy.thecubebeast.game.BeastRenderer.MATRIX_SIZE;
 import static com.bamboomy.thecubebeast.game.Cube.NUMBER_OF_SIDES;
 
 import android.opengl.Matrix;
+import android.util.Log;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -98,19 +100,21 @@ public class Beast {
         }
 
         Set<Integer> doubles = new HashSet<>();
-        while (doubles.size() > GameActivity.GAME_MODE.getDoubles()) {
+        while (doubles.size() < GameActivity.GAME_MODE.getDoubles()) {
             doubles.add((int) (Math.random() * cubes.length));
         }
 
         for (Integer i : doubles) {
-            cubes[i].setDoubleTupple();
+            Log.d(TAG, "double: " + i);
+            cubes[i].setDoubleTupple(gameActivity);
         }
+        Log.d(TAG, "past doubles...");
 
         boolean full = false;
         while (!full) {
             full = true;
             for (int i = 0; i < cubes.length; i++) {
-                Tupple tupple = cubes[i].addFirstSideToTupple();
+                Tupple tupple = cubes[i].addFirstSideToTupple(gameActivity);
                 int counter = 0;
                 if (tupple != null) {
                     while (!cubes[(i + 1 + counter) % cubes.length].addSecondSideToTupple(tupple)) {

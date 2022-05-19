@@ -48,15 +48,6 @@ class Side {
             GOOD = Pictures.decodeSampledBitmapFromResource(
                     R.drawable.good, 200, 200, gameActivity);
         }
-
-        /*
-        tupple = GameMaster.getInstance().getTupple(this, chooseUnchosen);
-
-        if (tupple.isNew()) {
-
-            tupple.setPicture(Pictures.getUnchoosenPicture(gameActivity));
-        }
-         */
     }
 
     void initTextures() {
@@ -155,10 +146,6 @@ class Side {
         loadGLTextureSide(true);
     }
 
-    Tupple getTupple() {
-        return tupple;
-    }
-
     void hide() {
 
         hidden = true;
@@ -176,5 +163,9 @@ class Side {
     public void destroy() {
 
         destroyed = true;
+    }
+
+    void init(){
+        bitmap = tupple.getBitmap();
     }
 }

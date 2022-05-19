@@ -69,7 +69,7 @@ public class GameMaster {
 
         Tupple current = tupples[(int) (Math.random() * tupples.length)];
 
-        while (!current.isNew()) {
+        while (!current.isBrandNew()) {
 
             current = tupples[(int) (Math.random() * tupples.length)];
         }

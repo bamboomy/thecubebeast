@@ -518,7 +518,7 @@ class Cube {
         colorBuf.put(oneCubeFullOfColor).position(0);
     }
 
-    public void setDoubleTupple() {
+    public void setDoubleTupple(GameActivity gameActivity) {
 
         int i = (int) (Math.random() * sides.length);
         int j = (int) (Math.random() * sides.length);
@@ -530,9 +530,14 @@ class Cube {
 
         sides[i].setTupple(tupple);
         sides[j].setTupple(tupple);
+
+        tupple.setPicture(Pictures.getUnchoosenPicture(gameActivity));
+
+        sides[i].init();
+        sides[j].init();
     }
 
-    public Tupple addFirstSideToTupple() {
+    public Tupple addFirstSideToTupple(GameActivity gameActivity) {
 
         if (isFull()) {
             return null;
@@ -543,7 +548,14 @@ class Cube {
             index = (int) (Math.random() * sides.length);
         }
 
-        return GameMaster.getInstance().getTupple(sides[index]);
+        Tupple tupple = GameMaster.getInstance().getTupple(sides[index]);
+
+        tupple.setPicture(Pictures.getUnchoosenPicture(gameActivity));
+
+        sides[index].setTupple(tupple);
+        sides[index].init();
+
+        return tupple;
     }
 
     public boolean addSecondSideToTupple(Tupple tupple) {
@@ -558,6 +570,8 @@ class Cube {
         }
 
         tupple.add(sides[index]);
+        sides[index].setTupple(tupple);
+        sides[index].init();
 
         return true;
     }
