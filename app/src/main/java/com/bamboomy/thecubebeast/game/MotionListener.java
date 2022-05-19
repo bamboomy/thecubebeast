@@ -64,11 +64,11 @@ public class MotionListener extends GLSurfaceView implements View.OnTouchListene
     }
 
     public MotionListener(Application application, int width, int height, FragmentManager supportFragmentManager,
-                          GameActivity gameActivity, Pictures pictures) {
+                          GameActivity gameActivity) {
 
         this(application);
 
-        renderer = new BeastRenderer(pictures, this, gameActivity);
+        renderer = new BeastRenderer(this, gameActivity);
 
         setRenderer(renderer);
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);

@@ -5,6 +5,9 @@ import static com.bamboomy.thecubebeast.game.Cube.NUMBER_OF_SIDES;
 
 import android.opengl.Matrix;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Beast {
 
     // Holds the final rotation of the cube
@@ -88,14 +91,32 @@ public class Beast {
 
     private float[] mMVPMatrix;
 
-    Beast(Pictures pictures, MotionListener motionListener, GameActivity gameActivity) {
+    Beast(MotionListener motionListener, GameActivity gameActivity) {
 
-        for (int i = 0; i < cubes.length / 2; i++) {
-            cubes[i] = new Cube(pictures, motionListener, gameActivity, true);
+        for (int i = 0; i < cubes.length; i++) {
+            cubes[i] = new Cube(motionListener, gameActivity);
         }
 
-        for (int i = cubes.length / 2; i < cubes.length; i++) {
-            cubes[i] = new Cube(pictures, motionListener, gameActivity, false);
+        Set<Integer> doubles = new HashSet<>();
+        while (doubles.size() > GameActivity.GAME_MODE.getDoubles()) {
+            doubles.add((int) (Math.random() * cubes.length));
+        }
+
+        for (Integer i : doubles) {
+            cubes[i].setDoubleTupple();
+        }
+
+        boolean full = false;
+        while (!full) {
+            full = true;
+            for (int i = 0; i < cubes.length / 2; i++) {
+                cubes[i].addFirstSideToTupple();
+                full &= cubes[i].isFull();
+            }
+            for (int i = cubes.length / 2; i < cubes.length; i++) {
+                cubes[i].addSecondSideToTupple();
+                full &= cubes[i].isFull();
+            }
         }
 
         Matrix.setIdentityM(depthMatrix, 0);
@@ -273,7 +294,7 @@ public class Beast {
         return hitInformation;
     }
 
-    public void toggleCube(){
+    public void toggleCube() {
 
         if (current != null) {
 

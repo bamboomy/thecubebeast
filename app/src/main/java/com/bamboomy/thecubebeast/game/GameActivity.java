@@ -60,7 +60,7 @@ public class GameActivity extends AppCompatActivity implements MediaPlayer.OnErr
         height = size.y;
 
         motionListener = new MotionListener(getApplication(), width, height,
-                getSupportFragmentManager(), this, pictures);
+                getSupportFragmentManager(), this);
 
         setContentView(motionListener);
 

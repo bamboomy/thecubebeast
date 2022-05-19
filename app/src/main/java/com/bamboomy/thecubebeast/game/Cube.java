@@ -169,11 +169,11 @@ class Cube {
         }
     }
 
-    Cube(Pictures pictures, MotionListener motionListener, GameActivity gameActivity, boolean chooseUnchosen) {
+    Cube(MotionListener motionListener, GameActivity gameActivity) {
 
         for (int i = 0; i < sides.length; i++) {
 
-            sides[i] = new Side(gameActivity, chooseUnchosen);
+            sides[i] = new Side(gameActivity);
         }
 
         init();
@@ -516,5 +516,32 @@ class Cube {
         colorBuf = ByteBuffer.allocateDirect(oneCubeFullOfColor.length
                 * FLOAT_SIZE_BYTES).order(ByteOrder.nativeOrder()).asFloatBuffer();
         colorBuf.put(oneCubeFullOfColor).position(0);
+    }
+
+    public void setDoubleTupple() {
+
+        int i = (int) (Math.random() * sides.length);
+        int j = (int) (Math.random() * sides.length);
+        while (i == j) {
+            j = (int) (Math.random() * sides.length);
+        }
+
+        Tupple tupple = GameMaster.getInstance().getDoubleTupple(sides[i], sides[j]);
+
+        sides[i].setTupple(tupple);
+        sides[j].setTupple(tupple);
+    }
+
+    public void addFirstSideToTupple() {
+    }
+
+    public void addSecondSideToTupple() {
+    }
+
+    public boolean isFull() {
+        boolean full = true;
+        for (int i = 0; i < sides.length; i++) {
+            sides[i]
+        }
     }
 }

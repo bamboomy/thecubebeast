@@ -12,6 +12,7 @@ import com.bamboomy.thecubebeast.R;
 import javax.microedition.khronos.opengles.GL10;
 
 import lombok.Getter;
+import lombok.Setter;
 
 class Side {
 
@@ -20,6 +21,7 @@ class Side {
     private static Bitmap COVER;
     static Bitmap GOOD;
 
+    @Setter
     private Tupple tupple;
 
     private boolean shown = false;
@@ -31,7 +33,7 @@ class Side {
     @Getter
     private boolean destroyed = false;
 
-    Side(GameActivity gameActivity, boolean chooseUnchosen) {
+    Side(GameActivity gameActivity) {
 
         textures = new int[1];
 
@@ -45,14 +47,14 @@ class Side {
                     R.drawable.good, 200, 200, gameActivity);
         }
 
+        /*
         tupple = GameMaster.getInstance().getTupple(this, chooseUnchosen);
 
         if (tupple.isNew()) {
 
             tupple.setPicture(Pictures.getUnchoosenPicture(gameActivity));
         }
-
-        //bitmap = tupple.getBitmap();
+         */
     }
 
     void initTextures() {

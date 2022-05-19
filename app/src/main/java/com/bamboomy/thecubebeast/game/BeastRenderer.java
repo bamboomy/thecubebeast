@@ -142,9 +142,9 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
     private boolean colorTutorialFinished = false;
 
 
-    BeastRenderer(Pictures pictures, MotionListener motionListener, GameActivity gameActivity) {
+    BeastRenderer(MotionListener motionListener, GameActivity gameActivity) {
 
-        beast = new Beast(pictures, motionListener, gameActivity);
+        beast = new Beast(motionListener, gameActivity);
 
         Matrix.setIdentityM(mRotMatrix, 0);
 

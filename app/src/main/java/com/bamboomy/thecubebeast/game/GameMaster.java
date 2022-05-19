@@ -69,6 +69,21 @@ public class GameMaster {
         return current;
     }
 
+    Tupple getDoubleTupple(Side first, Side second) {
+
+        Tupple current = tupples[(int) (Math.random() * tupples.length)];
+
+        while (!current.isNew()) {
+
+            current = tupples[(int) (Math.random() * tupples.length)];
+        }
+
+        current.add(first);
+        current.add(second);
+
+        return current;
+    }
+
     synchronized boolean canShow(Side side) {
 
         if (numberShown >= Tupple.MAX) {
