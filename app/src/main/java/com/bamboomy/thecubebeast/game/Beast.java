@@ -117,9 +117,10 @@ public class Beast {
                 Tupple tupple = cubes[i].addFirstSideToTupple(gameActivity);
                 int counter = 0;
                 if (tupple != null) {
-                    while (!cubes[(i + 1 + counter) % cubes.length].addSecondSideToTupple(tupple)) {
+                    while (cubes[(i + 1 + counter) % cubes.length].isFull()) {
                         counter++;
                     }
+                    cubes[(i + 1 + counter) % cubes.length].addSecondSideToTupple(tupple);
                 }
                 full &= cubes[i].isFull() && cubes[(i + 1 + counter) % cubes.length].isFull();
             }

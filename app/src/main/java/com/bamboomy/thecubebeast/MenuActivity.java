@@ -60,7 +60,7 @@ public class MenuActivity extends FragmentActivity {
         });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("test");
+        builder.setMessage("test\ntest");
 
         builder.create().show();
 
