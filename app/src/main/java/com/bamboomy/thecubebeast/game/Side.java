@@ -11,6 +11,7 @@ import com.bamboomy.thecubebeast.R;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,7 @@ class Side {
     private static Bitmap COVER;
     static Bitmap GOOD;
 
+    @Getter
     @Setter
     private Tupple tupple;
 

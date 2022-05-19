@@ -109,13 +109,15 @@ public class Beast {
         boolean full = false;
         while (!full) {
             full = true;
-            for (int i = 0; i < cubes.length / 2; i++) {
-                cubes[i].addFirstSideToTupple();
-                full &= cubes[i].isFull();
-            }
-            for (int i = cubes.length / 2; i < cubes.length; i++) {
-                cubes[i].addSecondSideToTupple();
-                full &= cubes[i].isFull();
+            for (int i = 0; i < cubes.length; i++) {
+                Tupple tupple = cubes[i].addFirstSideToTupple();
+                int counter = 0;
+                if (tupple != null) {
+                    while (!cubes[(i + 1 + counter) % cubes.length].addSecondSideToTupple(tupple)) {
+                        counter++;
+                    }
+                }
+                full &= cubes[i].isFull() && cubes[(i + 1 + counter) % cubes.length].isFull();
             }
         }
 

@@ -532,16 +532,41 @@ class Cube {
         sides[j].setTupple(tupple);
     }
 
-    public void addFirstSideToTupple() {
+    public Tupple addFirstSideToTupple() {
+
+        if (isFull()) {
+            return null;
+        }
+
+        int index = (int) (Math.random() * sides.length);
+        while (sides[index].getTupple() != null) {
+            index = (int) (Math.random() * sides.length);
+        }
+
+        return GameMaster.getInstance().getTupple(sides[index]);
     }
 
-    public void addSecondSideToTupple() {
+    public boolean addSecondSideToTupple(Tupple tupple) {
+
+        if (isFull()) {
+            return false;
+        }
+
+        int index = (int) (Math.random() * sides.length);
+        while (sides[index].getTupple() != null) {
+            index = (int) (Math.random() * sides.length);
+        }
+
+        tupple.add(sides[index]);
+
+        return true;
     }
 
     public boolean isFull() {
         boolean full = true;
         for (int i = 0; i < sides.length; i++) {
-            sides[i]
+            full &= sides[i].getTupple() != null;
         }
+        return full;
     }
 }

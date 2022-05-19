@@ -55,17 +55,13 @@ public class GameMaster {
         return instance;
     }
 
-    Tupple getTupple(Side side, boolean chooseUnchosen) {
+    Tupple getTupple(Side side) {
 
         Tupple current = tupples[(int) (Math.random() * tupples.length)];
-
-        while (current.isFull() || chooseUnchosen != current.isUnchosen()) {
-
+        while (current.isFull()) {
             current = tupples[(int) (Math.random() * tupples.length)];
         }
-
         current.add(side);
-
         return current;
     }
 
