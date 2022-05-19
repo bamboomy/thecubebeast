@@ -1,5 +1,6 @@
 package com.bamboomy.thecubebeast.game;
 
+import static com.bamboomy.thecubebeast.MainActivity.TAG;
 import static com.bamboomy.thecubebeast.game.BeastRenderer.FLOAT_SIZE_BYTES;
 import static com.bamboomy.thecubebeast.game.BeastRenderer.MATRIX_SIZE;
 
@@ -526,6 +527,9 @@ class Cube {
             j = (int) (Math.random() * sides.length);
         }
 
+        Log.d(TAG, "double: ->" + i);
+        Log.d(TAG, "double: ->" + j);
+
         Tupple tupple = GameMaster.getInstance().getDoubleTupple(sides[i], sides[j]);
 
         sides[i].setTupple(tupple);
@@ -548,6 +552,8 @@ class Cube {
             index = (int) (Math.random() * sides.length);
         }
 
+        Log.d(TAG, "single(1st): -> " + index);
+
         Tupple tupple = GameMaster.getInstance().getTupple(sides[index]);
 
         tupple.setPicture(Pictures.getUnchoosenPicture(gameActivity));
@@ -568,6 +574,8 @@ class Cube {
         while (sides[index].getTupple() != null) {
             index = (int) (Math.random() * sides.length);
         }
+
+        Log.d(TAG, "single(2nd): -> " + index);
 
         tupple.add(sides[index]);
         sides[index].setTupple(tupple);

@@ -114,12 +114,14 @@ public class Beast {
         while (!full) {
             full = true;
             for (int i = 0; i < cubes.length; i++) {
+                Log.d(TAG, "single(1st): " + i);
                 Tupple tupple = cubes[i].addFirstSideToTupple(gameActivity);
                 int counter = 0;
                 if (tupple != null) {
                     while (cubes[(i + 1 + counter) % cubes.length].isFull()) {
                         counter++;
                     }
+                    Log.d(TAG, "single(2nd): " + (i + 1 + counter) % cubes.length);
                     cubes[(i + 1 + counter) % cubes.length].addSecondSideToTupple(tupple);
                 }
                 full &= cubes[i].isFull() && cubes[(i + 1 + counter) % cubes.length].isFull();
