@@ -31,7 +31,32 @@ import com.bamboomy.thecubebeast.game.GameMode;
  */
 public class LevelActivity extends FragmentActivity {
 
-    private TextView easy, harder, difficult, realDeal;
+    private static final String TEXT_EASY = "\"Easy\":\n" +
+            "In the easy level\n" +
+            "each cube has a double\n" +
+            "so you could,\n" +
+            "- if you want -\n" +
+            "start off with solving those doubles first\n" +
+            "so you have, for each cube,\n" +
+            "a reference to solve the other sides...";
+
+    private static final String TEXT_HARDER = "Harder:\n" +
+            "In the harder level\n" +
+            "4 of the cubes have a double.\n" +
+            "You could start searching those doubles first.\n" +
+            "The rest of the cubes are guaranteed\n" +
+            "to not have a double.";
+
+    private static final String TEXT_DIFFICULT = "Difficult:\n" +
+            "The difficult level is almost the real deal:\n" +
+            "Only two cubes have doubles,\n" +
+            "the rest of the cubes are guaranteed\n" +
+            "to not have a double.";
+
+    private static final String TEXT_THE_REAL_DEAL = "The Real Deal:\n" +
+            "It doesn't get harder than this:\n" +
+            "Each cube is guaranteed\n" +
+            "to not have a double!!!";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,41 +64,48 @@ public class LevelActivity extends FragmentActivity {
 
         setContentView(R.layout.game);
 
-        easy = findViewById(R.id.easy);
-
-        easy.setOnClickListener(v -> {
+        findViewById(R.id.easy).setOnClickListener(v -> {
             GameActivity.GAME_MODE = GameMode.EASY;
             Intent myIntent = new Intent(LevelActivity.this, GameActivity.class);
             LevelActivity.this.startActivity(myIntent);
         });
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("test\ntest");
-
-        builder.create().show();
-
-        harder = findViewById(R.id.harder);
-
-        harder.setOnClickListener(v -> {
+        findViewById(R.id.harder).setOnClickListener(v -> {
             GameActivity.GAME_MODE = GameMode.HARDER;
             Intent myIntent = new Intent(LevelActivity.this, GameActivity.class);
             LevelActivity.this.startActivity(myIntent);
         });
 
-        difficult = findViewById(R.id.difficult);
-
-        difficult.setOnClickListener(v -> {
+        findViewById(R.id.difficult).setOnClickListener(v -> {
             GameActivity.GAME_MODE = GameMode.DIFFICULT;
             Intent myIntent = new Intent(LevelActivity.this, GameActivity.class);
             LevelActivity.this.startActivity(myIntent);
         });
 
-        realDeal = findViewById(R.id.real_deal);
-
-        realDeal.setOnClickListener(v -> {
+        findViewById(R.id.real_deal).setOnClickListener(v -> {
             GameActivity.GAME_MODE = GameMode.REAL_DEAL;
             Intent myIntent = new Intent(LevelActivity.this, GameActivity.class);
             LevelActivity.this.startActivity(myIntent);
+        });
+
+        findViewById(R.id.info_easy).setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(TEXT_EASY).create().show();
+        });
+
+        findViewById(R.id.info_harder).setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(TEXT_HARDER).create().show();
+        });
+
+        findViewById(R.id.info_difficult).setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(TEXT_DIFFICULT).create().show();
+        });
+
+        findViewById(R.id.info_real_deal).setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(TEXT_THE_REAL_DEAL).create().show();
         });
     }
 }
