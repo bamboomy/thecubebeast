@@ -54,7 +54,7 @@ public class GameActivity extends RenderActivity {
         height = size.y;
 
         motionListener = new MotionListener(getApplication(), width, height,
-                getSupportFragmentManager(), this);
+                getSupportFragmentManager(), this, 8);
 
         setContentView(motionListener);
 

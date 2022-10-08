@@ -85,6 +85,22 @@ public class Beast {
             1f, 1f, 1f
     };
 
+    private static final float[] ONE_OF_TWO_COLLAPSED = {
+            -0.75f, 0f, 0f
+    };
+
+    private static final float[] ONE_OF_TWO_EXPANDED = {
+            -1f, 0f, 0f
+    };
+
+    private static final float[] TWO_OF_TWO_COLLAPSED = {
+            0.75f, 0f, 0f
+    };
+
+    private static final float[] TWO_OF_TWO_EXPANDED = {
+            1f, 0f, 0f
+    };
+
     private float[] depthMatrix = new float[MATRIX_SIZE];
 
     private Cube[] cubes = new Cube[8];
@@ -93,7 +109,9 @@ public class Beast {
 
     private float[] mMVPMatrix;
 
-    Beast(MotionListener motionListener, RenderActivity gameActivity) {
+    Beast(MotionListener motionListener, RenderActivity gameActivity, int nbOfCubes) {
+
+        cubes = new Cube[nbOfCubes];
 
         for (int i = 0; i < cubes.length; i++) {
             cubes[i] = new Cube(motionListener, gameActivity);
@@ -131,82 +149,53 @@ public class Beast {
         Matrix.setIdentityM(depthMatrix, 0);
         Matrix.translateM(depthMatrix, 0, 0, 0, 1);
 
-        initCubes();
+        initCubes(nbOfCubes);
     }
 
-    private void initCubes() {
+    private void initCubes(int nbOfCubes) {
+
+        switch (nbOfCubes){
+
+            case 1:
+
+                break;
+
+            case 2:
+
+                initCube(0, ONE_OF_TWO_COLLAPSED, ONE_OF_TWO_EXPANDED);
+                initCube(1, TWO_OF_TWO_COLLAPSED, TWO_OF_TWO_EXPANDED);
+
+                break;
+
+            case 8:
+
+                initCube(0, ONE_COLLAPSED, ONE_EXPANDED);
+                initCube(1, TWO_COLLAPSED, TWO_EXPANDED);
+                initCube(2, THREE_COLLAPSED, THREE_EXPANDED);
+                initCube(3, FOUR_COLLAPSED, FOUR_EXPANDED);
+                initCube(4, FIVE_COLLAPSED, FIVE_EXPANDED);
+                initCube(5, SIX_COLLAPSED, SIX_EXPANDED);
+                initCube(6, SEVEN_COLLAPSED, SEVEN_EXPANDED);
+                initCube(7, EIGHT_COLLAPSED, EIGHT_EXPANDED);
+
+                break;
+
+            default:
+
+                throw new RuntimeException("can't be");
+        }
+    }
+
+    private void initCube(int i, float[] collapsed, float[] expanded) {
 
         float[] translateMatrix = new float[BeastRenderer.MATRIX_SIZE];
         Matrix.setIdentityM(translateMatrix, 0);
-        Matrix.translateM(translateMatrix, 0, ONE_COLLAPSED[0], ONE_COLLAPSED[1], ONE_COLLAPSED[2]);
-        cubes[0].setCollapsedTranslateMatrix(translateMatrix);
+        Matrix.translateM(translateMatrix, 0, collapsed[0], collapsed[1], collapsed[2]);
+        cubes[i].setCollapsedTranslateMatrix(translateMatrix);
         translateMatrix = new float[BeastRenderer.MATRIX_SIZE];
         Matrix.setIdentityM(translateMatrix, 0);
-        Matrix.translateM(translateMatrix, 0, ONE_EXPANDED[0], ONE_EXPANDED[1], ONE_EXPANDED[2]);
-        cubes[0].setExpandedTranslateMatrix(translateMatrix);
-
-        translateMatrix = new float[BeastRenderer.MATRIX_SIZE];
-        Matrix.setIdentityM(translateMatrix, 0);
-        Matrix.translateM(translateMatrix, 0, TWO_COLLAPSED[0], TWO_COLLAPSED[1], TWO_COLLAPSED[2]);
-        cubes[1].setCollapsedTranslateMatrix(translateMatrix);
-        translateMatrix = new float[BeastRenderer.MATRIX_SIZE];
-        Matrix.setIdentityM(translateMatrix, 0);
-        Matrix.translateM(translateMatrix, 0, TWO_EXPANDED[0], TWO_EXPANDED[1], TWO_EXPANDED[2]);
-        cubes[1].setExpandedTranslateMatrix(translateMatrix);
-
-        translateMatrix = new float[BeastRenderer.MATRIX_SIZE];
-        Matrix.setIdentityM(translateMatrix, 0);
-        Matrix.translateM(translateMatrix, 0, THREE_COLLAPSED[0], THREE_COLLAPSED[1], THREE_COLLAPSED[2]);
-        cubes[2].setCollapsedTranslateMatrix(translateMatrix);
-        translateMatrix = new float[BeastRenderer.MATRIX_SIZE];
-        Matrix.setIdentityM(translateMatrix, 0);
-        Matrix.translateM(translateMatrix, 0, THREE_EXPANDED[0], THREE_EXPANDED[1], THREE_EXPANDED[2]);
-        cubes[2].setExpandedTranslateMatrix(translateMatrix);
-
-        translateMatrix = new float[BeastRenderer.MATRIX_SIZE];
-        Matrix.setIdentityM(translateMatrix, 0);
-        Matrix.translateM(translateMatrix, 0, FOUR_COLLAPSED[0], FOUR_COLLAPSED[1], FOUR_COLLAPSED[2]);
-        cubes[3].setCollapsedTranslateMatrix(translateMatrix);
-        translateMatrix = new float[BeastRenderer.MATRIX_SIZE];
-        Matrix.setIdentityM(translateMatrix, 0);
-        Matrix.translateM(translateMatrix, 0, FOUR_EXPANDED[0], FOUR_EXPANDED[1], FOUR_EXPANDED[2]);
-        cubes[3].setExpandedTranslateMatrix(translateMatrix);
-
-        translateMatrix = new float[BeastRenderer.MATRIX_SIZE];
-        Matrix.setIdentityM(translateMatrix, 0);
-        Matrix.translateM(translateMatrix, 0, FIVE_COLLAPSED[0], FIVE_COLLAPSED[1], FIVE_COLLAPSED[2]);
-        cubes[4].setCollapsedTranslateMatrix(translateMatrix);
-        translateMatrix = new float[BeastRenderer.MATRIX_SIZE];
-        Matrix.setIdentityM(translateMatrix, 0);
-        Matrix.translateM(translateMatrix, 0, FIVE_EXPANDED[0], FIVE_EXPANDED[1], FIVE_EXPANDED[2]);
-        cubes[4].setExpandedTranslateMatrix(translateMatrix);
-
-        translateMatrix = new float[BeastRenderer.MATRIX_SIZE];
-        Matrix.setIdentityM(translateMatrix, 0);
-        Matrix.translateM(translateMatrix, 0, SIX_COLLAPSED[0], SIX_COLLAPSED[1], SIX_COLLAPSED[2]);
-        cubes[5].setCollapsedTranslateMatrix(translateMatrix);
-        translateMatrix = new float[BeastRenderer.MATRIX_SIZE];
-        Matrix.setIdentityM(translateMatrix, 0);
-        Matrix.translateM(translateMatrix, 0, SIX_EXPANDED[0], SIX_EXPANDED[1], SIX_EXPANDED[2]);
-        cubes[5].setExpandedTranslateMatrix(translateMatrix);
-
-        translateMatrix = new float[BeastRenderer.MATRIX_SIZE];
-        Matrix.setIdentityM(translateMatrix, 0);
-        Matrix.translateM(translateMatrix, 0, SEVEN_COLLAPSED[0], SEVEN_COLLAPSED[1], SEVEN_COLLAPSED[2]);
-        cubes[6].setCollapsedTranslateMatrix(translateMatrix);
-        translateMatrix = new float[BeastRenderer.MATRIX_SIZE];
-        Matrix.setIdentityM(translateMatrix, 0);
-        Matrix.translateM(translateMatrix, 0, SEVEN_EXPANDED[0], SEVEN_EXPANDED[1], SEVEN_EXPANDED[2]);
-        cubes[6].setExpandedTranslateMatrix(translateMatrix);
-
-        translateMatrix = new float[BeastRenderer.MATRIX_SIZE];
-        Matrix.setIdentityM(translateMatrix, 0);
-        Matrix.translateM(translateMatrix, 0, EIGHT_COLLAPSED[0], EIGHT_COLLAPSED[1], EIGHT_COLLAPSED[2]);
-        cubes[7].setCollapsedTranslateMatrix(translateMatrix);
-        translateMatrix = new float[BeastRenderer.MATRIX_SIZE];
-        Matrix.setIdentityM(translateMatrix, 0);
-        Matrix.translateM(translateMatrix, 0, EIGHT_EXPANDED[0], EIGHT_EXPANDED[1], EIGHT_EXPANDED[2]);
-        cubes[7].setExpandedTranslateMatrix(translateMatrix);
+        Matrix.translateM(translateMatrix, 0, expanded[0], expanded[1], expanded[2]);
+        cubes[i].setExpandedTranslateMatrix(translateMatrix);
     }
 
     void initTextures() {

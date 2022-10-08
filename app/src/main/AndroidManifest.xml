@@ -20,6 +20,11 @@
             android:name=".LevelActivity">
         </activity>
         <activity
+            android:name=".game.TutorialActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+        <activity
             android:name=".game.GameActivity"
             android:configChanges="orientation"
             android:screenOrientation="sensorLandscape"

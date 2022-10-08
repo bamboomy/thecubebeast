@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.bamboomy.thecubebeast.game.GameActivity;
 import com.bamboomy.thecubebeast.game.GameMode;
+import com.bamboomy.thecubebeast.game.TutorialActivity;
 
 /**
  * Created by a162299 on 9-10-2015.
@@ -42,5 +43,10 @@ public class MenuActivity extends FragmentActivity {
             MenuActivity.this.startActivity(myIntent);
         });
 
+        findViewById(R.id.tutorial).setOnClickListener(v -> {
+            GameActivity.GAME_MODE = GameMode.REAL_DEAL;
+            Intent myIntent = new Intent(MenuActivity.this, TutorialActivity.class);
+            MenuActivity.this.startActivity(myIntent);
+        });
     }
 }
