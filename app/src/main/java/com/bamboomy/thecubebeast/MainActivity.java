@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        Intent myIntent = new Intent(MainActivity.this, GameActivity.class);
+        Intent myIntent = new Intent(MainActivity.this, MenuActivity.class);
 
         myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 

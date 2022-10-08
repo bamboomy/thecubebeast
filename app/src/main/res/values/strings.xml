@@ -15,5 +15,9 @@
     <string name="difficult">difficult</string>
     <string name="real_deal">the real deal</string>
     <string name="cube_beast">The Cube Beast</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="game">The Game</string>
+    <string name="feedback">Feedback</string>
+    <string name="credits">Credits</string>
 
 </resources>

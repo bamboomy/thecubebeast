@@ -166,6 +166,6 @@ class Side {
     }
 
     void init(){
-        bitmap = tupple.getBitmap();
+        //bitmap = tupple.getBitmap();
     }
 }

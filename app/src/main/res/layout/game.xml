@@ -30,7 +30,7 @@
         android:contentDescription="@string/cube_beast"
         android:gravity="center_horizontal"
         android:scaleType="centerInside"
-        android:text="@string/cube_beast"
+        android:text="@string/game"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#fff" />
 
@@ -44,19 +44,26 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tutorial"
+            android:id="@+id/easy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/tutorial"
+            android:contentDescription="@string/easy"
             android:gravity="center_horizontal"
             android:scaleType="centerInside"
-            android:text="@string/tutorial"
+            android:text="@string/easy"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#0F0" />
 
         <View
             android:layout_width="10dp"
             android:layout_height="1dp"></View>
+
+        <ImageView
+            android:id="@+id/info_easy"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_circle_info"
+            android:tint="#0F0" />
 
     </LinearLayout>
 
@@ -70,13 +77,13 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/game"
+            android:id="@+id/harder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/game"
+            android:contentDescription="@string/harder"
             android:gravity="center_horizontal"
             android:scaleType="centerInside"
-            android:text="@string/game"
+            android:text="@string/harder"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#0F0" />
 
@@ -84,11 +91,18 @@
             android:layout_width="10dp"
             android:layout_height="1dp"></View>
 
+        <ImageView
+            android:id="@+id/info_harder"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_circle_info"
+            android:tint="#0F0" />
+
     </LinearLayout>
 
     <View
         android:layout_width="1dp"
-        android:layout_height="40dp"></View>
+        android:layout_height="30dp"></View>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -96,39 +110,46 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/feedback"
+            android:id="@+id/difficult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/feedback"
+            android:contentDescription="@string/difficult"
             android:gravity="center_horizontal"
             android:scaleType="centerInside"
-            android:text="@string/feedback"
+            android:text="@string/difficult"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#0F0" />
 
         <View
             android:layout_width="10dp"
             android:layout_height="1dp"></View>
+
+        <ImageView
+            android:id="@+id/info_difficult"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_circle_info"
+            android:tint="#0F0" />
 
     </LinearLayout>
 
     <View
         android:layout_width="1dp"
-        android:layout_height="40dp"></View>
+        android:layout_height="30dp"></View>
 
-    <!--LinearLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/credits"
+            android:id="@+id/real_deal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/credits"
+            android:contentDescription="@string/real_deal"
             android:gravity="center_horizontal"
             android:scaleType="centerInside"
-            android:text="@string/credits"
+            android:text="@string/real_deal"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#0F0" />
 
@@ -136,6 +157,13 @@
             android:layout_width="10dp"
             android:layout_height="1dp"></View>
 
-    </LinearLayout-->
+        <ImageView
+            android:id="@+id/info_real_deal"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_circle_info"
+            android:tint="#0F0" />
+
+    </LinearLayout>
 
 </LinearLayout>
