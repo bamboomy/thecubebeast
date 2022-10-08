@@ -63,7 +63,7 @@ public class TutorialImage {
 
     private FloatBuffer vertexBuffer, colorBuffer; // buffer holding the vertices
 
-    private static float x1 = -1.75f, x2 = -0.5f, y1= -0.5f, y2 = 0.5f, z = -2f;
+    private static float x1 = -1.75f, x2 = -0.5f, y1 = -0.5f, y2 = 0.5f, z = -2f;
 
     private static final float[] vertices = {
             // X, Y, Z, W
@@ -72,14 +72,14 @@ public class TutorialImage {
             x2, y2, z, 1.0f,
             x1, y1, z, 1.0f,
             x2, y2, z, 1.0f,
-            x1, y2, z, 1.0f, };
+            x1, y2, z, 1.0f,};
 
     private static final int TEXTURE_COORD_DATA_SIZE = 2;
     private static final int FLOAT_SIZE_BYTES = 4;
     private static final int TRIANGLE_VERTICES_DATA_STRIDE_BYTES = 4 * FLOAT_SIZE_BYTES;
     private boolean hidden = false;
 
-    TutorialImage(){
+    TutorialImage() {
 
         // a float has 4 bytes so we allocate for each coordinate 4 bytes
         ByteBuffer byteBuffer = ByteBuffer.allocateDirect(vertices.length * 4);
@@ -138,7 +138,8 @@ public class TutorialImage {
 
     /**
      * The draw method for the square with the GL context
-     *  @param maPositionHandle2
+     *
+     * @param maPositionHandle2
      * @param muMVPMatrixHandle2
      * @param mMVPMatrix
      * @param maColorHandle
@@ -146,7 +147,7 @@ public class TutorialImage {
     public void draw(int mTextureCoordinateHandle, int maPositionHandle2,
                      int muMVPMatrixHandle2, float[] mMVPMatrix, int maColorHandle) {
 
-        if(hidden){
+        if (hidden) {
             return;
         }
 

@@ -194,11 +194,12 @@ public class Beast {
 
     private void initCubes(int nbOfCubes) {
 
-        switch (nbOfCubes){
+        switch (nbOfCubes) {
 
             case 1:
 
                 initCube(0, ONLY_ONE_COLLAPSED, ONLY_ONE_EXPANDED);
+                current = cubes[0];
 
                 break;
 
