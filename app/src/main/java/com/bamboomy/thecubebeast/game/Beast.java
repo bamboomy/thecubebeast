@@ -101,6 +101,38 @@ public class Beast {
             1f, 0f, 0f
     };
 
+    private static final float[] ONE_OF_FOUR_COLLAPSED = {
+            -0.75f, -0.75f, 0f
+    };
+
+    private static final float[] ONE_OF_FOUR_EXPANDED = {
+            -1f, -1f, 0f
+    };
+
+    private static final float[] TWO_OF_FOUR_COLLAPSED = {
+            -0.75f, 0.75f, 0f
+    };
+
+    private static final float[] TWO_OF_FOUR_EXPANDED = {
+            -1f, 1f, 0f
+    };
+
+    private static final float[] THREE_OF_FOUR_COLLAPSED = {
+            0.75f, -0.75f, 0f
+    };
+
+    private static final float[] THREE_OF_FOUR_EXPANDED = {
+            1f, -1f, 0f
+    };
+
+    private static final float[] FOUR_OF_FOUR_COLLAPSED = {
+            0.75f, 0.75f, 0f
+    };
+
+    private static final float[] FOUR_OF_FOUR_EXPANDED = {
+            1f, 1f, 0f
+    };
+
     private float[] depthMatrix = new float[MATRIX_SIZE];
 
     private Cube[] cubes = new Cube[8];
@@ -164,6 +196,15 @@ public class Beast {
 
                 initCube(0, ONE_OF_TWO_COLLAPSED, ONE_OF_TWO_EXPANDED);
                 initCube(1, TWO_OF_TWO_COLLAPSED, TWO_OF_TWO_EXPANDED);
+
+                break;
+
+            case 4:
+
+                initCube(0, ONE_OF_FOUR_COLLAPSED, ONE_OF_FOUR_EXPANDED);
+                initCube(1, TWO_OF_FOUR_COLLAPSED, TWO_OF_FOUR_EXPANDED);
+                initCube(2, THREE_OF_FOUR_COLLAPSED, THREE_OF_FOUR_EXPANDED);
+                initCube(3, FOUR_OF_FOUR_COLLAPSED, FOUR_OF_FOUR_EXPANDED);
 
                 break;
 

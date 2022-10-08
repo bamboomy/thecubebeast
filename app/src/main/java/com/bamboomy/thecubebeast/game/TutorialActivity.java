@@ -59,7 +59,7 @@ public class TutorialActivity extends RenderActivity {
         height = size.y;
 
         motionListener = new MotionListener(getApplication(), width, height,
-                getSupportFragmentManager(), this, 2);
+                getSupportFragmentManager(), this, 4);
 
         setContentView(motionListener);
 
