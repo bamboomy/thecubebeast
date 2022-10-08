@@ -7,6 +7,7 @@ import static com.bamboomy.thecubebeast.game.Mode.CUBE;
 import static com.bamboomy.thecubebeast.game.Mode.ONE;
 import static com.bamboomy.thecubebeast.game.Mode.SIDE;
 import static com.bamboomy.thecubebeast.game.Mode.SIDE_OR_CUBE;
+import static com.bamboomy.thecubebeast.game.Mode.SINGLE_CUBE;
 import static com.bamboomy.thecubebeast.game.TutorialManager.COLOR_TUTORIAL_FINISHED;
 
 import android.content.SharedPreferences;
@@ -141,8 +142,14 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
     private int cubesColored = 0, sidesColored = 0, solved = 0;
     private boolean colorTutorialFinished = false;
 
+    private boolean tutorial;
+    private int nbOfCubes;
+
 
     BeastRenderer(MotionListener motionListener, RenderActivity gameActivity, int nbOfCubes) {
+
+        tutorial = nbOfCubes != 8;
+        this.nbOfCubes = nbOfCubes;
 
         beast = new Beast(motionListener, gameActivity, nbOfCubes);
 
@@ -159,6 +166,10 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
         textSetupManagers(true, true, true, true);
 
         GameMaster.getInstance().setRenderer(this);
+
+        if (nbOfCubes == 1) {
+            mode = SINGLE_CUBE;
+        }
     }
 
     @Override
@@ -275,9 +286,10 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
         choiceImage.draw(mTextureCoordinateHandle, maPositionHandle, muMVPMatrixHandle, tutorialMatrix, maColorHandle);
         feedbackImage.draw(mTextureCoordinateHandle, maPositionHandle, muMVPMatrixHandle, tutorialMatrix, maColorHandle);
 
-        updateTimeText();
-
-        renderText();
+        if (!tutorial) {
+            updateTimeText();
+            renderText();
+        }
     }
 
     private void setGLParameters() {
@@ -324,12 +336,12 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                     }
                 }
 
-            } else if (mode.equals(ONE)) {
+            } else if (mode.equals(ONE) || mode.equals(SINGLE_CUBE)) {
 
                 if (colorImage.checkTriangleHit(0, new float[1],
                         mHeight, mWidth, x, y, tutorialMatrix)) {
 
-                    previousMode = ONE;
+                    previousMode = mode;
 
                     mode = SIDE_OR_CUBE;
 
@@ -344,9 +356,9 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
                     boolean cubeHit = hitInformation.isFound();
 
                     if (!cubeHit) {
-
-                        mode = ALL;
-
+                        if (!mode.equals(SINGLE_CUBE)) {
+                            mode = ALL;
+                        }
                     } else {
 
                         taps++;
@@ -400,7 +412,11 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
                 } else {
 
-                    mode = ALL;
+                    if (nbOfCubes == 1) {
+                        mode = SINGLE_CUBE;
+                    } else {
+                        mode = ALL;
+                    }
 
                     beast.toggleCube();
 
@@ -419,7 +435,11 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
                 } else {
 
-                    mode = ALL;
+                    if (nbOfCubes == 1) {
+                        mode = SINGLE_CUBE;
+                    } else {
+                        mode = ALL;
+                    }
 
                     beast.toggleCube();
 
@@ -438,7 +458,11 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
                 } else {
 
-                    mode = ALL;
+                    if (nbOfCubes == 1) {
+                        mode = SINGLE_CUBE;
+                    } else {
+                        mode = ALL;
+                    }
 
                     colorTutorialFinished = true;
 
@@ -456,7 +480,11 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
                 } else {
 
-                    mode = ALL;
+                    if (nbOfCubes == 1) {
+                        mode = SINGLE_CUBE;
+                    } else {
+                        mode = ALL;
+                    }
 
                     beast.toggleCube();
 
@@ -526,11 +554,13 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
             refresh();
 
-        } else if (mode.equals(ONE)) {
+        } else if (mode.equals(ONE) || mode.equals(SINGLE_CUBE)) {
 
             if (!beast.rotateCurrentCube(mYAngle, mXAngle)) {
 
-                mode = ALL;
+                if (nbOfCubes != 1) {
+                    mode = ALL;
+                }
             }
 
             refresh();

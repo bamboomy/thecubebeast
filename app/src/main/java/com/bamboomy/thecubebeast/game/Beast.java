@@ -133,6 +133,14 @@ public class Beast {
             1f, 1f, 0f
     };
 
+    private static final float[] ONLY_ONE_COLLAPSED = {
+            0f, 0f, 0f
+    };
+
+    private static final float[] ONLY_ONE_EXPANDED = {
+            0f, 0f, 0f
+    };
+
     private float[] depthMatrix = new float[MATRIX_SIZE];
 
     private Cube[] cubes = new Cube[8];
@@ -189,6 +197,8 @@ public class Beast {
         switch (nbOfCubes){
 
             case 1:
+
+                initCube(0, ONLY_ONE_COLLAPSED, ONLY_ONE_EXPANDED);
 
                 break;
 

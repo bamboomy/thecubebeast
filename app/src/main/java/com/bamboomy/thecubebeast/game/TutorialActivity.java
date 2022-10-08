@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.bamboomy.thecubebeast.MainActivity;
+import com.bamboomy.thecubebeast.MenuActivity;
 import com.bamboomy.thecubebeast.R;
 
 public class TutorialActivity extends RenderActivity {
@@ -59,7 +60,7 @@ public class TutorialActivity extends RenderActivity {
         height = size.y;
 
         motionListener = new MotionListener(getApplication(), width, height,
-                getSupportFragmentManager(), this, 4);
+                getSupportFragmentManager(), this, 1);
 
         setContentView(motionListener);
 
@@ -181,7 +182,7 @@ public class TutorialActivity extends RenderActivity {
     @Override
     public void onBackPressed() {
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MenuActivity.class);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
