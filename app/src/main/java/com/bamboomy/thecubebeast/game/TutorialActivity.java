@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
@@ -15,7 +14,7 @@ import android.widget.Toast;
 import com.bamboomy.thecubebeast.MainActivity;
 import com.bamboomy.thecubebeast.R;
 
-public class GameActivity extends RenderActivity {
+public class TutorialActivity extends RenderActivity {
 
     private MotionListener motionListener;
 
@@ -25,11 +24,17 @@ public class GameActivity extends RenderActivity {
 
     private String md5Hex;
 
-    static GameActivity INSTANCE;
+    private MediaPlayer M_PLAYER_RAW, M_PLAYER_LOOP;
+
+    static TutorialActivity INSTANCE;
 
     private int width, height;
 
     public static GameMode GAME_MODE = null;
+
+    private int[] raws = {
+            R.raw.raw1, R.raw.raw2, R.raw.raw3, R.raw.raw4
+    };
 
     private boolean play;
 
@@ -120,6 +125,46 @@ public class GameActivity extends RenderActivity {
         M_PLAYER_LOOP = null;
 
         Log.d("beast", "game : destroy");
+    }
+
+    void raw() {
+
+        if (M_PLAYER_RAW != null) {
+            M_PLAYER_RAW.release();
+        }
+
+        M_PLAYER_RAW = MediaPlayer.create(this, raws[(int) (Math.random() * raws.length)]);
+        M_PLAYER_RAW.setOnErrorListener(this);
+        M_PLAYER_RAW.setLooping(false);
+        M_PLAYER_RAW.setVolume(100, 100);
+
+        M_PLAYER_RAW.start();
+    }
+
+    @Override
+    public boolean onError(MediaPlayer mp, int what, int extra) {
+
+        Toast.makeText(this, "music player failed", Toast.LENGTH_SHORT).show();
+
+        if (M_PLAYER_RAW != null) {
+            try {
+                M_PLAYER_RAW.stop();
+                M_PLAYER_RAW.release();
+            } finally {
+                M_PLAYER_RAW = null;
+            }
+        }
+
+        if (M_PLAYER_LOOP != null) {
+            try {
+                M_PLAYER_LOOP.stop();
+                M_PLAYER_LOOP.release();
+            } finally {
+                M_PLAYER_LOOP = null;
+            }
+        }
+
+        return false;
     }
 
     @Override

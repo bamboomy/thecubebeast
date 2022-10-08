@@ -35,7 +35,7 @@ class Side {
     @Getter
     private boolean destroyed = false;
 
-    Side(GameActivity gameActivity) {
+    Side(RenderActivity gameActivity) {
 
         textures = new int[1];
 

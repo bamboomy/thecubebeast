@@ -170,7 +170,7 @@ class Cube {
         }
     }
 
-    Cube(MotionListener motionListener, GameActivity gameActivity) {
+    Cube(MotionListener motionListener, RenderActivity gameActivity) {
 
         for (int i = 0; i < sides.length; i++) {
 
@@ -519,7 +519,7 @@ class Cube {
         colorBuf.put(oneCubeFullOfColor).position(0);
     }
 
-    public void setDoubleTupple(GameActivity gameActivity) {
+    public void setDoubleTupple(RenderActivity gameActivity) {
 
         int i = (int) (Math.random() * sides.length);
         int j = (int) (Math.random() * sides.length);
@@ -541,7 +541,7 @@ class Cube {
         sides[j].init();
     }
 
-    public Tupple addFirstSideToTupple(GameActivity gameActivity) {
+    public Tupple addFirstSideToTupple(RenderActivity gameActivity) {
 
         if (isFull()) {
             return null;

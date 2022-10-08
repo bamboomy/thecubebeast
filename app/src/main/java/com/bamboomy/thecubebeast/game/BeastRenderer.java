@@ -75,7 +75,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
 
     private Mode mode = ALL, previousMode = null;
 
-    private GameActivity activity;
+    private RenderActivity activity;
 
     private TutorialManager tutorialManager;
 
@@ -142,7 +142,7 @@ public class BeastRenderer implements GLSurfaceView.Renderer {
     private boolean colorTutorialFinished = false;
 
 
-    BeastRenderer(MotionListener motionListener, GameActivity gameActivity) {
+    BeastRenderer(MotionListener motionListener, RenderActivity gameActivity) {
 
         beast = new Beast(motionListener, gameActivity);
 

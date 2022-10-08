@@ -93,7 +93,7 @@ public class Beast {
 
     private float[] mMVPMatrix;
 
-    Beast(MotionListener motionListener, GameActivity gameActivity) {
+    Beast(MotionListener motionListener, RenderActivity gameActivity) {
 
         for (int i = 0; i < cubes.length; i++) {
             cubes[i] = new Cube(motionListener, gameActivity);

@@ -64,7 +64,7 @@ public class MotionListener extends GLSurfaceView implements View.OnTouchListene
     }
 
     public MotionListener(Application application, int width, int height, FragmentManager supportFragmentManager,
-                          GameActivity gameActivity) {
+                          RenderActivity gameActivity) {
 
         this(application);
 

@@ -76,7 +76,7 @@ public class Pictures {
         return inSampleSize;
     }
 
-    static Bitmap getUnchoosenPicture(GameActivity gameActivity) {
+    static Bitmap getUnchoosenPicture(RenderActivity gameActivity) {
 
         if (internalDrawables.isEmpty()) {
             throw new RuntimeException("no more unchosen pictures");
